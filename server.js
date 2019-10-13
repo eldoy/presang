@@ -1,4 +1,3 @@
-const zlib = require('zlib')
 const pretty = require('pretty')
 const loader = require('conficurse')
 const Sirloin = require('sirloin')
