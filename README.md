@@ -3,15 +3,19 @@ Concept isomorphic server side rendered (SSR) HTML written in pure vanilla Javas
 
 Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not used, and package size is incredibly small at only 0.6Kb uncompressed!
 
-### Install
-Just clone this repo and start developing your app:
-```
-// Install packages
-npm i
+You can completely control what gets included on the server and what gets loaded after the page is served in the browser without any magic.
 
-// Start the server and navigate to http://localhost:5000
-nodemon server.js
+Have a look at the [Presang demo] for a fuller example.
+
+### Install
 ```
+// Install the library globally
+npm i -g presang
+
+// Go to your presang app directory and start the server
+presang
+```
+Open http://localhost:5000 in your browser when the server is running.
 
 ### Usage
 Build html using the `h` function. Use the `q` function for selecting HTML elements.
