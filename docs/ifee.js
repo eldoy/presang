@@ -1,4 +1,4 @@
-(function(){
+(function() {
   var document = {
     createElement: function (name) {
       name = (name || '').trim().toLowerCase()
@@ -14,7 +14,7 @@
         toString: function () {
           return '<'
             + name
-            + (atts.length ? ' ' + atts.join('') : '')
+            + (atts.length ? ' ' + atts.join(' ') : '')
             + '>'
             + (this.textContent || '')
             + children.join('')
@@ -28,7 +28,7 @@
     }
   }
 
-  window.h = function html (name, text, atts, tags) {
+  window.h = function (name, text, atts, tags) {
     var el = document.createElement(name)
     if(typeof text !== 'undefined'){
       el.textContent = text

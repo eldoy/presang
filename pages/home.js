@@ -1,4 +1,4 @@
-var { h } = require('../lib/presang.js')
+var { h } = require('../main.js')
 var waveorb = require('waveorb-client')
 var api = waveorb('http://localhost:4000')
 

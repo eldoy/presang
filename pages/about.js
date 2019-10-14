@@ -1,4 +1,4 @@
-var { h } = require('../lib/presang.js')
+var { h } = require('../main.js')
 
 module.exports = {
   title: 'About',

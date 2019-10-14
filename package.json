@@ -1,17 +1,16 @@
 {
   "name": "presang",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "lib": "lib"
+  "version": "0.0.1",
+  "description": "Isomorphic SSR HTML and CSS written in pure Javascript",
+  "main": "main.js",
+  "bin": {
+    "presang": "./bin/presang.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Vidar Eldøy <vidar@eldoy.com>",
+  "license": "MIT",
   "devDependencies": {},
   "dependencies": {
     "conficurse": "0.0.8",
