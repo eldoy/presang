@@ -22,6 +22,7 @@ var waveorb = require('waveorb-client')
 var api = waveorb('http://localhost:4000')
 
 module.exports = {
+  layout: 'default',
   title: 'Home page',
   render: async function () {
     return [
