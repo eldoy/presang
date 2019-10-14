@@ -1,11 +1,11 @@
 # Presang
-Concept isomorphic server side rendered (SSR) HTML written in pure vanilla Javascript.
+Isomorphic server side rendered (SSR) HTML written in pure vanilla Javascript.
 
 Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not used, and package size is incredibly small at only 0.6Kb uncompressed!
 
 You can completely control what gets included on the server and what gets loaded after the page is served in the browser without any magic.
 
-Have a look at the [Presang demo] for a fuller example.
+Have a look at the [Presang demo](https://github.com/fugroup/presang-demo) for a full example with code.
 
 ### Install
 ```
@@ -17,8 +17,15 @@ presang
 ```
 Open http://localhost:5000 in your browser when the server is running.
 
+### App structure
+`layouts` - contains your layouts
+`pages` - contains your pages
+`assets` - contains your external javascript and css
+
+Layouts and pages are javascript files that must export an async function that returns a string of HTML.
+
 ### Usage
-Build html using the `h` function. Use the `q` function for selecting HTML elements.
+Build HTML using the `h` function, it works both on the server and in the browser. Use the `q` function for selecting HTML elements, that only works in the browser.
 
 ```javascript
 var { h } = require('../lib/presang.js')
