@@ -34,7 +34,7 @@ Layouts and pages are javascript files that must export an async function that r
 Build HTML using the `h` function, it works both on the server and in the browser. Use the `q` function for selecting HTML elements, that only works in the browser.
 
 ```javascript
-var { h } = require('../lib/presang.js')
+var { h } = require('presang')
 var waveorb = require('waveorb-client')
 var api = waveorb('http://localhost:4000')
 
