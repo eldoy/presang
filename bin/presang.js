@@ -5,11 +5,8 @@ const { server } = require('../main.js')
 
 const cmd = process.argv[2] || 'help'
 const commands = { build, help, serve: server }
-// const root = path.resolve(path.join(__dirname, '..' ))
 const root = process.cwd()
-console.log({ root })
 const dir = path.join(root, process.argv[3] || 'dist')
-console.log({ dir })
 
 const fn = commands[cmd]
 if (!fn) {
@@ -45,7 +42,6 @@ async function build () {
   try {
     pages = find('pages')
   } catch (e) {}
-  console.log(pages)
 
   if (!pages) {
     console.log('No pages found')
@@ -59,15 +55,17 @@ async function build () {
     console.log(e)
     layouts = [path.join(root, 'lib', 'layout')]
   }
-  console.log(layouts)
 
   fs.mkdirSync(dir)
 
-  for (const key in pages) {
+  for (let key in pages) {
     const page = pages[key]
     const html = await layouts[page.layout || 'default'](page)
     if (html) {
-      fs.writeFileSync(path.join(dir, `${key}.js`), html)
+      if (key === 'home') {
+        key = 'index'
+      }
+      fs.writeFileSync(path.join(dir, `${key}.html`), html)
     }
   }
   console.log(`Files written to '${dir}'`)

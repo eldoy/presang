@@ -13,7 +13,13 @@ Have a look at the [Presang demo](https://github.com/fugroup/presang-demo) for a
 npm i -g presang
 
 // Go to your presang app directory and start the server
-presang
+presang serve
+
+// Build app into static HTML
+presang build
+
+// Command line help
+presang help
 
 // To run in production mode (no pretty output)
 NODE_ENV=production presang
