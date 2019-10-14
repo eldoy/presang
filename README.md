@@ -24,9 +24,9 @@ npm i presang
 Open http://localhost:5000 in your browser when the server is running.
 
 ### App structure
-`layouts` - contains your layouts
-`pages` - contains your pages
-`assets` - contains your external javascript and css
+* `layouts` - contains your layouts
+* `pages` - contains your pages
+* `assets` - contains your external javascript and css
 
 Layouts and pages are javascript files that must export an async function that returns a string of HTML.
 
