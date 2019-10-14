@@ -25,8 +25,11 @@ function help () {
 }
 
 async function build () {
+  function read (name) {
+    return fs.readdirSync(path.join(root, name))
+  }
   function find (name) {
-    const names = fs.readdirSync(path.join(root, name))
+    const names = read(name)
     const result = {}
     for (const x of names) {
       result[x.split('.')[0]] = require(path.join(root, name, x))
@@ -52,11 +55,21 @@ async function build () {
   try {
     layouts = find('layouts')
   } catch (e) {
-    console.log(e)
     layouts = [path.join(root, 'lib', 'layout')]
   }
 
   fs.mkdirSync(dir)
+
+  let assets
+  try {
+    assets = read('assets').map(x => [
+      path.join(root, 'assets', x),
+      path.join(dir, x)
+    ])
+    for (const dest of assets) {
+      fs.copyFileSync(dest[0], dest[1])
+    }
+  } catch (e) {}
 
   for (let key in pages) {
     const page = pages[key]
