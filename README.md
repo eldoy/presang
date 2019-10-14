@@ -14,6 +14,12 @@ npm i -g presang
 
 // Go to your presang app directory and start the server
 presang
+
+// To run in production mode (no pretty output)
+NODE_ENV=production presang
+
+// Install the presang library into your app
+npm i presang
 ```
 Open http://localhost:5000 in your browser when the server is running.
 
