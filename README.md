@@ -12,11 +12,29 @@ Have a look at the [Presang demo](https://github.com/fugroup/presang-demo) for a
 // Install the library globally
 npm i -g presang
 
+// Install the presang library into your app
+npm i presang
+
+// Require the libraries inside your pages
+const { h } = require('presang')
+
+// Or in your custom server file
+const { server } = require('presang')
+
+// Start the server programmatically
+server()
+```
+
+### Usage
+```
 // Go to your presang app directory and start the server
 presang serve
 
 // Build app into static HTML
 presang build
+
+// Build into custom directory, default is './dist'
+presang build dir
 
 // Command line help
 presang help
@@ -24,8 +42,6 @@ presang help
 // To run in production mode (no pretty output)
 NODE_ENV=production presang
 
-// Install the presang library into your app
-npm i presang
 ```
 Open http://localhost:5000 in your browser when the server is running.
 
@@ -36,7 +52,7 @@ Open http://localhost:5000 in your browser when the server is running.
 
 Layouts and pages are javascript files that must export an async function that returns a string of HTML.
 
-### Usage
+### API
 Build HTML using the `h` function, it works both on the server and in the browser. Use the `q` function for selecting HTML elements, that only works in the browser.
 
 ```javascript
