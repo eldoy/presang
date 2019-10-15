@@ -58,8 +58,8 @@ Layouts and pages are javascript files that must export an async function that r
 Create HTML tags with the `h` function. It takes 4 parameters:
 * the tag name
 * the text content
-* its attributes
-* an array tags to be rendered inside of it
+* its attributes as an object
+* an array of tags to be rendered inside of it
 
 Find and manipulate HTML elements with `q` and `qa`. They are the same as `document.querySelector` and `document.querySelectorAll`, and only work in the browser.
 
