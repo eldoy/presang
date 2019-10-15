@@ -55,15 +55,13 @@ Open http://localhost:5000 in your browser when the server is running.
 Layouts and pages are javascript files that must export an async function that returns a string of HTML.
 
 ### API
-Build HTML using the `h` function, it works both on the server and in the browser. Use the `q` function for selecting HTML elements, that only works in the browser.
-
 Create HTML tags with the `h` function. It takes 4 parameters:
 * the tag name
 * the text content
 * its attributes
 * an array tags to be rendered inside of it
 
-Find and manipulate HTML element with `q` and `qa`, they are the same as `document.querySelector` and `document.querySelectorAll`.
+Find and manipulate HTML element with `q` and `qa`, they are the same as `document.querySelector` and `document.querySelectorAll`. These two work only in the browser.
 
 ```javascript
 // Write this
@@ -74,9 +72,10 @@ h('div', 'text content', { class: 'text' })
 ```
 It is easy to create functional components:
 ```javascript
-//
+// Some data from your server API
 const items = ['Milk', 'Meat', 'Butter']
 
+// Create the list component
 function list (items) {
   return h('ul', '', {}, items.map(item => h('li', item)))
 }
@@ -87,7 +86,8 @@ h('div', list(items))
 // Will give you this
 <div><ul><li>Milk</li><li>Meat</li><li>Butter</li></ul></div>
 ```
-
+### Layouts
+You can have multiple layouts:
 ```javascript
 // Define your layout
 const { h, q, qa } = require('presang')
@@ -106,7 +106,7 @@ module.exports = async function (page) {
         // Include javascript functions like this
         h('script', h),
         h('script', q),
-        h('script', qa),
+        h('script', qa)
       ]),
       h('body', '', {}, [
         h('section', '', {}, [
@@ -131,8 +131,13 @@ module.exports = async function (page) {
     ])
   ].join('')
 }
+```
 
-// Then create a page
+### Pages
+Links to internal pages must end with `.html`.
+
+```javascript
+// Create a page
 var { h } = require('presang')
 
 module.exports = {

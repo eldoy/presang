@@ -10,7 +10,7 @@ module.exports = async function (page) {
         h('link', null, { rel: 'stylesheet', href: '/app.css', type: 'text/css' }),
         h('script', h),
         h('script', q),
-        h('script', qa),
+        h('script', qa)
       ]),
       h('body', '', {}, [
         h('section', '', {}, [
