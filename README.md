@@ -11,9 +11,6 @@ Have a look at the [Presang demo](https://github.com/fugroup/presang-demo) for a
 ```
 // Install the library globally
 npm i -g presang
-
-// Install the presang library into your app
-npm i presang
 ```
 
 ### Usage
@@ -23,6 +20,9 @@ presang create
 
 // Go to your presang app directory and start the server
 presang serve
+
+// Install the presang library into your app
+npm i presang
 
 // Require the libraries inside your pages
 const { h } = require('presang')
