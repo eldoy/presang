@@ -80,7 +80,7 @@ function list (items) {
   return h('ul', '', {}, items.map(item => h('li', item)))
 }
 
-// Somewhere else on your page
+// Use the list component somewhere else
 h('div', list(items))
 
 // Will give you this
@@ -115,7 +115,7 @@ module.exports = async function (page) {
             h('a', 'About', { href: '/about.html' })
           ]),
 
-          // Insert the page content here
+          // Insert the page content like this
           h('main', '', {}, await page.render())
         ]),
 
@@ -134,7 +134,7 @@ module.exports = async function (page) {
 ```
 
 ### Pages
-Pages are inserted into your layout. Links to internal pages must end with `.html`.
+Pages are inserted into your layout. Links to internal pages must end with `.html`, and the `index.html` page (home page), must be named `home.js`.
 
 ```javascript
 // Create a page

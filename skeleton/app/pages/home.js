@@ -3,7 +3,7 @@ const { h } = require('presang')
 module.exports = {
   layout: 'default',
   title: 'home',
-  render: async function () {
+  render: async function ($) {
     return [
       h('h1', 'home'),
       h('p', 'this is your shiny new blazing fast ', {}, [
