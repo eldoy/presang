@@ -24,8 +24,8 @@ npm i presang
 // Go to your presang app directory and start the server
 presang serve
 
-// Require the libraries inside your pages
-const { h } = require('presang')
+// Require the libraries inside your layouts and pages
+const { h, q, qa } = require('presang')
 
 // Or in your custom server file
 const { server } = require('presang')
