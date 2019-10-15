@@ -14,15 +14,6 @@ npm i -g presang
 
 // Install the presang library into your app
 npm i presang
-
-// Require the libraries inside your pages
-const { h } = require('presang')
-
-// Or in your custom server file
-const { server } = require('presang')
-
-// Start the server programmatically
-server()
 ```
 
 ### Usage
@@ -32,6 +23,15 @@ presang create
 
 // Go to your presang app directory and start the server
 presang serve
+
+// Require the libraries inside your pages
+const { h } = require('presang')
+
+// Or in your custom server file
+const { server } = require('presang')
+
+// Start the server programmatically
+server()
 
 // Build app into static HTML
 presang build

@@ -7,6 +7,7 @@ const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve: server }
 const root = process.cwd()
 const dir = path.join(root, process.argv[3] || 'dist')
+const base = path.resolve(path.join(__dirname, '..'))
 
 const fn = commands[cmd]
 if (!fn) {
@@ -28,15 +29,12 @@ function help () {
 function create () {
   function copyFolderSync(from, to) {
     fs.mkdirSync(to)
-    fs.readdirSync(from).forEach(item => {
-      if (fs.lstatSync(path.join(from, item)).isFile()) {
-        fs.copyFileSync(path.join(from, item), path.join(to, item))
-      } else {
-        copyFolderSync(path.join(from, item), path.join(to, item))
-      }
+    fs.readdirSync(from).forEach(function(item) {
+      const [f, t] = [path.join(from, item), path.join(to, item)]
+      fs.lstatSync(f).isFile() ? fs.copyFileSync(f, t) : copyFolderSync(f, t)
     })
   }
-  copyFolderSync(path.join(root, 'skeleton'), path.join(process.cwd(), 'app'))
+  copyFolderSync(path.join(base, 'skeleton'), path.join(root, 'app'))
 }
 
 async function build () {
