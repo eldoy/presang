@@ -80,7 +80,7 @@ function list (items) {
   return h('ul', '', {}, items.map(item => h('li', item)))
 }
 
-// Somewhere else in your page
+// Somewhere else on your page
 h('div', list(items))
 
 // Will give you this
@@ -134,7 +134,7 @@ module.exports = async function (page) {
 ```
 
 ### Pages
-Links to internal pages must end with `.html`.
+Pages are inserted into your layout. Links to internal pages must end with `.html`.
 
 ```javascript
 // Create a page
