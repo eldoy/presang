@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const path = require('path')
-const { server } = require('../main.js')
+const { server } = require('../index.js')
 
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve: server }

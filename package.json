@@ -1,8 +1,8 @@
 {
   "name": "presang",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Isomorphic SSR HTML and CSS written in pure Javascript",
-  "main": "main.js",
+  "main": "index.js",
   "bin": {
     "presang": "./bin/presang.js"
   },
