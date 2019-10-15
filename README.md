@@ -1,7 +1,7 @@
 # Presang
 Isomorphic server side rendered (SSR) HTML written in pure vanilla Javascript.
 
-Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not used, and package size is incredibly small at only 0.6Kb uncompressed!
+Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not needed, and package size is incredibly small at only 0.5Kb uncompressed!
 
 You can completely control what gets included on the server and what gets loaded after the page is served in the browser without any magic.
 
@@ -92,7 +92,9 @@ Layouts surround your pages. You can have multiple layouts if you wish.
 // Define your layout
 const { h, q, qa } = require('presang')
 
-module.exports = async function (page) {
+// The '$' object contains route data:
+// $ = { app, req, res, page }
+module.exports = async function ($) {
   return [
     h('!doctype', null, { html: true }),
     h('html', '', {}, [
@@ -100,7 +102,7 @@ module.exports = async function (page) {
         h('meta', null, { 'http-equiv': 'content-type', content: 'text/html; charset=utf-8' }),
 
         // The page title is set here
-        h('title', page.title || 'Untitled'),
+        h('title', $.page.title || 'Untitled'),
         h('link', null, { rel: 'stylesheet', href: '/app.css', type: 'text/css' }),
 
         // Include javascript functions like this
@@ -116,7 +118,7 @@ module.exports = async function (page) {
           ]),
 
           // Insert the page content like this
-          h('main', '', {}, await page.render())
+          h('main', '', {}, await $.page.render())
         ]),
 
         // Define a javascript function
@@ -148,7 +150,7 @@ module.exports = {
   title: 'Home',
 
   // This is rendered on the server
-  render: async function () {
+  render: async function ($) {
 
     // Return an array if you have more than one root element
     return [

@@ -7,8 +7,8 @@
     "presang": "./bin/presang.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node ./bin/presang.js serve",
+    "test": "jest --watch",
+    "serve": "nodemon ./bin/presang.js serve",
     "build": "rm -rf ./dist && node ./bin/presang.js build",
     "help": "node ./bin/presang.js help"
   },
@@ -18,7 +18,9 @@
     "type": "git",
     "url": "https://github.com/fugroup/presang"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
   "dependencies": {
     "conficurse": "0.0.8",
     "pretty": "^2.0.0",
