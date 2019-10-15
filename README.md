@@ -18,11 +18,11 @@ npm i -g presang
 // Create an app skeleton
 presang create
 
-// Go to your presang app directory and start the server
-presang serve
-
 // Install the presang library into your app
 npm i presang
+
+// Go to your presang app directory and start the server
+presang serve
 
 // Require the libraries inside your pages
 const { h } = require('presang')
