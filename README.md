@@ -61,7 +61,7 @@ Create HTML tags with the `h` function. It takes 4 parameters:
 * its attributes
 * an array tags to be rendered inside of it
 
-Find and manipulate HTML element with `q` and `qa`, they are the same as `document.querySelector` and `document.querySelectorAll`. These two work only in the browser.
+Find and manipulate HTML elements with `q` and `qa`. They are the same as `document.querySelector` and `document.querySelectorAll`, and only work in the browser.
 
 ```javascript
 // Write this
