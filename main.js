@@ -1,3 +1,4 @@
-const html = require('./lib/html.js')
+const h = require('./lib/html.js')
+const { q, qa } = require('./lib/query.js')
 const server = require('./lib/server.js')
-module.exports = { h: html, server }
+module.exports = { h, q, server }

@@ -1,0 +1,35 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans;
+  background-color: silver;
+}
+
+section {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+nav {
+  padding: 0.5rem 0;
+}
+
+nav a {
+  margin-right: 1rem;
+  color: black;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+}
+
+nav a.active-link {
+  color: white;
+  border-bottom: 1px solid white;
+}
+
+nav a:hover {
+  border-bottom: 1px solid white;
+}
+
+main {
+  background-color: white;
+  padding: 1rem;
+}

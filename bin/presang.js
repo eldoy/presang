@@ -4,7 +4,7 @@ const path = require('path')
 const { server } = require('../main.js')
 
 const cmd = process.argv[2] || 'help'
-const commands = { build, help, serve: server }
+const commands = { create, build, help, serve: server }
 const root = process.cwd()
 const dir = path.join(root, process.argv[3] || 'dist')
 
@@ -19,9 +19,24 @@ function help () {
   console.log([
     '\nPresang commands:\n',
     'help - print this menu',
+    'create - set up a minimal app',
     'serve - start the server',
     'build - build a static app\n'
   ].join('\n'))
+}
+
+function create () {
+  function copyFolderSync(from, to) {
+    fs.mkdirSync(to)
+    fs.readdirSync(from).forEach(item => {
+      if (fs.lstatSync(path.join(from, item)).isFile()) {
+        fs.copyFileSync(path.join(from, item), path.join(to, item))
+      } else {
+        copyFolderSync(path.join(from, item), path.join(to, item))
+      }
+    })
+  }
+  copyFolderSync(path.join(root, 'default'), path.join(process.cwd(), 'app'))
 }
 
 async function build () {
