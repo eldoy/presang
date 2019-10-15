@@ -87,7 +87,7 @@ h('div', list(items))
 <div><ul><li>Milk</li><li>Meat</li><li>Butter</li></ul></div>
 ```
 ### Layouts
-You can have multiple layouts:
+Layouts surround your pages. You can have multiple layouts if you wish.
 ```javascript
 // Define your layout
 const { h, q, qa } = require('presang')
