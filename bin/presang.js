@@ -36,7 +36,7 @@ function create () {
       }
     })
   }
-  copyFolderSync(path.join(root, 'default'), path.join(process.cwd(), 'app'))
+  copyFolderSync(path.join(root, 'skeleton'), path.join(process.cwd(), 'app'))
 }
 
 async function build () {

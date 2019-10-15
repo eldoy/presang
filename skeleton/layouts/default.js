@@ -1,4 +1,4 @@
-var { h, q, qa } = require('../../main.js')
+const { h, q, qa } = require('presang')
 
 module.exports = async function (page) {
   return [
@@ -15,10 +15,10 @@ module.exports = async function (page) {
       h('body', '', {}, [
         h('section', '', {}, [
           h('nav', '', {}, [
-            h('a', 'Home', { href: '/' }),
-            h('a', 'About', { href: '/about.html' })
+            h('a', 'home', { href: '/' }),
+            h('a', 'about', { href: '/about.html' })
           ]),
-          h('main', '', {}, await page.init())
+          h('main', '', {}, await page.render())
         ]),
         h('script', function activeLink () {
           var a = q(`nav a[href='${location.pathname}']`) || q('nav a')

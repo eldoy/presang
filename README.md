@@ -27,6 +27,9 @@ server()
 
 ### Usage
 ```
+// Create an app skeleton
+presang create
+
 // Go to your presang app directory and start the server
 presang serve
 
@@ -41,79 +44,114 @@ presang help
 
 // To run in production mode (no pretty output)
 NODE_ENV=production presang
-
 ```
 Open http://localhost:5000 in your browser when the server is running.
 
 ### App structure
-* `layouts` - contains your layouts
-* `pages` - contains your pages
-* `assets` - contains your external javascript and css
+* `app/layouts` - contains your layouts
+* `app/pages` - contains your pages
+* `app/assets` - contains your external javascript and css
 
 Layouts and pages are javascript files that must export an async function that returns a string of HTML.
 
 ### API
 Build HTML using the `h` function, it works both on the server and in the browser. Use the `q` function for selecting HTML elements, that only works in the browser.
 
+Create HTML tags with the `h` function. It takes 4 parameters:
+* the tag name
+* the text content
+* its attributes
+* an array tags to be rendered inside of it
+
+Find and manipulate HTML element with `q` and `qa`, they are the same as `document.querySelector` and `document.querySelectorAll`.
+
 ```javascript
+// Write this
+h('div', 'text content', { class: 'text' })
+
+// Get this
+<div class="text">text content</div>
+```
+It is easy to create functional components:
+```javascript
+//
+const items = ['Milk', 'Meat', 'Butter']
+
+function list (items) {
+  return h('ul', '', {}, items.map(item => h('li', item)))
+}
+
+// Somewhere else in your page
+h('div', list(items))
+
+// Will give you this
+<div><ul><li>Milk</li><li>Meat</li><li>Butter</li></ul></div>
+```
+
+```javascript
+// Define your layout
+const { h, q, qa } = require('presang')
+
+module.exports = async function (page) {
+  return [
+    h('!doctype', null, { html: true }),
+    h('html', '', {}, [
+      h('head', '', {}, [
+        h('meta', null, { 'http-equiv': 'content-type', content: 'text/html; charset=utf-8' }),
+
+        // The page title is set here
+        h('title', page.title || 'Untitled'),
+        h('link', null, { rel: 'stylesheet', href: '/app.css', type: 'text/css' }),
+
+        // Include javascript functions like this
+        h('script', h),
+        h('script', q),
+        h('script', qa),
+      ]),
+      h('body', '', {}, [
+        h('section', '', {}, [
+          h('nav', '', {}, [
+            h('a', 'Home', { href: '/' }),
+            h('a', 'About', { href: '/about.html' })
+          ]),
+
+          // Insert the page content here
+          h('main', '', {}, await page.render())
+        ]),
+
+        // Define a javascript function
+        h('script', function activeLink () {
+          var a = q(`nav a[href='${location.pathname}']`) || q('nav a')
+          a.classList.add('active-link')
+        }),
+
+        // Call the function on page load
+        h('script', 'activeLink()')
+      ])
+    ])
+  ].join('')
+}
+
+// Then create a page
 var { h } = require('presang')
-var waveorb = require('waveorb-client')
-var api = waveorb('http://localhost:4000')
 
 module.exports = {
+  // Name the layout to use, matches the file name
   layout: 'default',
-  title: 'Home page',
+
+  // The title of the page
+  title: 'Home',
+
+  // This is rendered on the server
   render: async function () {
+
+    // Return an array if you have more than one root element
     return [
-      h('h1', 'Hello'),
-      h('label', 'Add a new project', { for: 'create' }),
-      h('br'),
-      h('div', '', { id: 'errors' }),
-      h('input', '', { id: 'create', type: 'text' }),
-      h('button', 'Add', { onclick: 'createProject()' }),
-      h('div', '', { id: 'fields' }),
-      h('div', 'Loading...', { id: 'list' }),
-      h('script', [
-        'var projects = null',
-        renderProjectList.toString(),
-        createProject.toString(),
-        'renderProjectList()'
-      ].join(';\n'))
+      h('h1', 'Home'),
+      h('p', 'This is your shiny new blazing fast ', {}, [
+        h('a', 'Presang app!', { target: '_blank', href: 'https://github.com/fugroup/presang' })
+      ])
     ]
-  }
-}
-
-async function renderProjectList () {
-  if (!projects) {
-    projects = await api.fetch({ path: 'listProjects' })
-  }
-  q('#list').innerHTML = h(
-    'div',
-    projects.length ? '' : 'No projects found',
-    {},
-    projects.map(x => h('div', x.name))
-  )
-}
-
-async function createProject () {
-  var projectName = q('input').value
-  q('#errors').textContent = ''
-  q('#fields').textContent = ''
-  var result = await api.fetch({
-    path: 'createProject',
-    data: {
-      values: {
-        name: projectName
-      }
-    }
-  })
-  if (result.errors) {
-    q('#errors').textContent = result.errors.message
-    q('#fields').textContent = result.errors.values.name
-  } else {
-    q('input').value = ''
-    projects.unshift(result)
-    renderProjectList()
   }
 }
 ```
