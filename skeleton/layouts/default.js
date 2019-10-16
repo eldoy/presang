@@ -18,7 +18,7 @@ module.exports = async function ($) {
             h('a', 'home', { href: '/' }),
             h('a', 'about', { href: '/about.html' })
           ]),
-          h('main', '', {}, await $.page.render($))
+          h('main', '', {}, $.page.content)
         ]),
         h('script', function activeLink () {
           var a = q(`nav a[href='${location.pathname}']`) || q('nav a')

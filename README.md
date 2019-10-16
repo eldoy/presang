@@ -118,7 +118,7 @@ module.exports = async function ($) {
           ]),
 
           // Insert the page content like this
-          h('main', '', {}, await $.page.render())
+          h('main', '', {}, $.page.content)
         ]),
 
         // Define a javascript function
