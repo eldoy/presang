@@ -1,6 +1,6 @@
 {
   "name": "presang",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Isomorphic SSR HTML and CSS written in pure Javascript",
   "main": "index.js",
   "bin": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "conficurse": "0.0.8",
     "pretty": "^2.0.0",
-    "sirloin": "^0.13.3",
+    "sirloin": "^0.13.4",
     "wcookie": "^0.2.2"
   }
 }

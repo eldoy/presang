@@ -1,4 +1,4 @@
-const { h, q, qa, cookie } = require('../../index.js')
+const { h, q, qa, cookie } = require('presang')
 
 module.exports = async function ($) {
   return [
@@ -14,7 +14,7 @@ module.exports = async function ($) {
         h('script', qa)
       ]),
       h('body', '', {}, [
-        h('div', '', {}, [
+        h('div', '', { class: 'content' }, [
           h('nav', '', {}, [
             h('a', 'home', { href: '/' }),
             h('a', 'about', { href: '/about.html' })

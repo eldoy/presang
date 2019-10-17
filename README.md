@@ -54,6 +54,36 @@ Open http://localhost:5000 in your browser when the server is running.
 
 Layouts and pages are javascript files that must export an async function that returns a string of HTML.
 
+### Cookies
+Presang has cookie support for storing data between pages.
+```javascript
+// On the server
+// Set cookie, expires in 30 days
+$.req.cookie('name', 'hello')
+
+// Set cookie with custom expiry in days
+$.req.cookie('name', 'hello', 365)
+
+// Get cookie
+$.req.cookie('name')
+
+// Delete cookie
+$.req.cookie('name', '', -1)
+
+// In the browser
+// Set cookie, expires in 30 days
+cookie('name', 'hello')
+
+// Set cookie with custom expiry in days
+cookie('name', 'hello', 365)
+
+// Get cookie
+cookie('name')
+
+// Delete cookie
+cookie('name', '', -1)
+```
+
 ### API
 Create HTML tags with the `h` function. It takes 4 parameters:
 * the tag name

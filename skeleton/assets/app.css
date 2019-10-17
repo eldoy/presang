@@ -15,7 +15,22 @@ a, a:active, a:visited {
   text-decoration: none;
 }
 
-section {
+label {
+  display: block;
+  font-size: 90%;
+  color: #999;
+  margin-bottom: 0.3rem;
+}
+
+input[type='text'], input[type=password], textarea {
+  border: 1px solid #ccc;
+  padding: 3px 5px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 100%;
+}
+
+div.content {
   margin: 0 auto;
   max-width: 600px;
 }
