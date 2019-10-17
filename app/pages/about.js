@@ -1,4 +1,4 @@
-const { h } = require('presang')
+const { h } = require('../../index.js')
 
 module.exports = {
   layout: 'default',

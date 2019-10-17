@@ -1,19 +1,20 @@
-const { h, q, qa } = require('presang')
+const { h, q, qa, cookie } = require('../../index.js')
 
 module.exports = async function ($) {
   return [
     h('!doctype', null, { html: true }),
-    h('html', '', {}, [
+    h('html', '', { lang: 'en' }, [
       h('head', '', {}, [
         h('meta', null, { 'http-equiv': 'content-type', content: 'text/html; charset=utf-8' }),
         h('title', $.page.title || 'Untitled'),
         h('link', null, { rel: 'stylesheet', href: '/app.css', type: 'text/css' }),
+        h('script', cookie),
         h('script', h),
         h('script', q),
         h('script', qa)
       ]),
       h('body', '', {}, [
-        h('section', '', {}, [
+        h('div', '', {}, [
           h('nav', '', {}, [
             h('a', 'home', { href: '/' }),
             h('a', 'about', { href: '/about.html' })
