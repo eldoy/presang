@@ -1,5 +1,5 @@
 # Presang
-Isomorphic server side rendered (SSR) HTML written in pure vanilla Javascript.
+Compact web application framework. Write isomorphic server side rendered (SSR) HTML applications in pure vanilla Javascript.
 
 Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not needed, and package size is incredibly small at only 0.5Kb uncompressed!
 
