@@ -1,7 +1,7 @@
 # Presang
 Compact web application framework. Write isomorphic server side rendered (SSR) HTML applications in pure vanilla Javascript.
 
-Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not needed, and package size is incredibly small at only 0.5Kb uncompressed!
+Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not needed, and package size is incredibly small at only 98 bytes minified!
 
 You can completely control what gets included on the server and what gets loaded after the page is served in the browser without any magic.
 
@@ -24,8 +24,8 @@ npm i presang
 // Go to your presang app directory and start the server
 presang serve
 
-// Require the libraries inside your layouts and pages
-const { h, q, qa } = require('presang')
+// Require needed libraries inside your layouts and pages
+const { q, qa, cookie } = require('presang')
 
 // Or in your custom server file
 const { server } = require('presang')
@@ -70,36 +70,19 @@ $.req.cookie('name')
 // Delete cookie
 $.req.cookie('name', '', -1)
 
-// In the browser
-// Set cookie, expires in 30 days
+// In the browser remove the $.req in front
 cookie('name', 'hello')
-
-// Set cookie with custom expiry in days
-cookie('name', 'hello', 365)
-
-// Get cookie
-cookie('name')
-
-// Delete cookie
-cookie('name', '', -1)
 ```
 
-### API
-Create HTML tags with the `h` function. It takes 4 parameters:
-* the tag name
-* the text content
-* its attributes as an object
-* an array of tags to be rendered inside of it
+### HTML
+Create HTML tags using template literals, or include your own template library.
+```javascript
+`<div>Hello ${ name }</div>`
+```
 
 Find and manipulate HTML elements with `q` and `qa`. They are the same as `document.querySelector` and `document.querySelectorAll`, and only work in the browser.
 
-```javascript
-// Write this
-h('div', 'text content', { class: 'text' })
-
-// Get this
-<div class="text">text content</div>
-```
+### Components
 It is easy to create functional components:
 ```javascript
 // Some data from your server API
@@ -107,61 +90,54 @@ const items = ['Milk', 'Meat', 'Butter']
 
 // Create the list component
 function list (items) {
-  return h('ul', '', {}, items.map(item => h('li', item)))
+  return `<ul>${ items.map(item => `<li>${ item }</li>`) }</ul>`
 }
 
 // Use the list component somewhere else
-h('div', list(items))
+`<div>${ list(items) }</div>`
 
 // Will give you this
 <div><ul><li>Milk</li><li>Meat</li><li>Butter</li></ul></div>
 ```
+
 ### Layouts
-Layouts surround your pages. You can have multiple layouts if you wish.
+Layouts surround your pages, it is where your title, head, nav and footer usually goes. You can have multiple layouts if you want.
 ```javascript
-// Define your layout
-const { h, q, qa } = require('presang')
+const { q, qa, cookie } = require('presang')
 
-// The '$' object contains route data:
-// $ = { app, req, res, page }
 module.exports = async function ($) {
-  return [
-    h('!doctype', null, { html: true }),
-    h('html', '', {}, [
-      h('head', '', {}, [
-        h('meta', null, { 'http-equiv': 'content-type', content: 'text/html; charset=utf-8' }),
+  function current () {
+    var a = q(`nav a[href="${ location.pathname }"]`) || q('nav a')
+    a.classList.add('active-link')
+  }
+  return `
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-        // The page title is set here
-        h('title', $.page.title || 'Untitled'),
-        h('link', null, { rel: 'stylesheet', href: '/app.css', type: 'text/css' }),
+        <--! Set page title -->
+        <title>${ $.page.title || 'Untitled' }</title>
+        <link rel="stylesheet" href="/app.css" type="text/css">
 
-        // Include javascript functions like this
-        h('script', h),
-        h('script', q),
-        h('script', qa)
-      ]),
-      h('body', '', {}, [
-        h('section', '', {}, [
-          h('nav', '', {}, [
-            h('a', 'Home', { href: '/' }),
-            h('a', 'About', { href: '/about.html' })
-          ]),
+        <--! Include global scripts here -->
+        <script>${ q };${ qa };${ cookie }</script>
+      </head>
+      <body>
+        <div class="content">
+          <nav>
+            <a href="/">home</a>
+            <a href="/about.html">about</a>
+          </nav>
 
-          // Insert the page content like this
-          h('main', '', {}, $.page.content)
-        ]),
+          <--! Insert the page content here -->
+          <main>${ $.page.content }</main>
+        </div>
 
-        // Define a javascript function
-        h('script', function activeLink () {
-          var a = q(`nav a[href='${location.pathname}']`) || q('nav a')
-          a.classList.add('active-link')
-        }),
-
-        // Call the function on page load
-        h('script', 'activeLink()')
-      ])
-    ])
-  ].join('')
+        <--! Insert and call function on page load -->
+        <script>${ current }; current()</script>
+      </body>
+    </html>`
 }
 ```
 
@@ -169,26 +145,21 @@ module.exports = async function ($) {
 Pages are inserted into your layout. Links to internal pages must end with `.html`, and the `index.html` page (home page), must be named `home.js`.
 
 ```javascript
-// Create a page
-var { h } = require('presang')
-
 module.exports = {
-  // Name the layout to use, matches the file name
+  // The name of the layout, defaults to 'default'
   layout: 'default',
 
-  // The title of the page
-  title: 'Home',
+  // The page title
+  title: 'home',
 
-  // This is rendered on the server
+  // The render function is being rendred server side
   render: async function ($) {
-
-    // Return an array if you have more than one root element
-    return [
-      h('h1', 'Home'),
-      h('p', 'This is your shiny new blazing fast ', {}, [
-        h('a', 'Presang app!', { target: '_blank', href: 'https://github.com/fugroup/presang' })
-      ])
-    ]
+    return `
+      <h1>home</h1>
+      <p>
+        this is your shiny new blazing fast
+        <a href="https://github.com/fugroup/presang" target="_blank">presang app!</a>
+      </p>`
   }
 }
 ```
