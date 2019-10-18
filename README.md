@@ -80,7 +80,7 @@ Create HTML tags using template literals, or include your own template library.
 `<div>Hello ${ name }</div>`
 ```
 
-Find and manipulate HTML elements with `q`, `qa` and `m`. Read more about how to use them on the [Haka page](https://github.com/fugroup/haka).
+Find and manipulate HTML elements with `h`, `t`, `q` and `qa`. Read more about how to use them on the [Haka page](https://github.com/fugroup/haka).
 
 ### Components
 It is easy to create functional components:

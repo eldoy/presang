@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "conficurse": "0.0.8",
-    "haka": "^0.1.0",
+    "haka": "^0.2.1",
     "pretty": "^2.0.0",
     "sirloin": "^0.13.4",
     "wcookie": "^0.2.2"
