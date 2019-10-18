@@ -1,5 +1,5 @@
 const cookie = require('wcookie').browser
-const { q, qa } = require('./lib/query.js')
+const { q, qa, m } = require('haka')
 const markup = require('./lib/markup.js')
 const server = require('./lib/server.js')
-module.exports = { q, qa, markup, server, cookie }
+module.exports = { q, qa, m, markup, server, cookie }

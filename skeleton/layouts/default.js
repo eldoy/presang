@@ -1,4 +1,4 @@
-const { q, qa, cookie } = require('presang')
+const { q, qa, m, cookie } = require('presang')
 
 module.exports = async function ($) {
   function current () {
@@ -12,7 +12,7 @@ module.exports = async function ($) {
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>${ $.page.title || 'Untitled' }</title>
         <link rel="stylesheet" href="/app.css" type="text/css">
-        <script>${ q };${ qa };${ cookie }</script>
+        <script>${ q };${ qa };${ m };${ cookie }</script>
       </head>
       <body>
         <div class="content">
