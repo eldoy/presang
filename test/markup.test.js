@@ -32,9 +32,7 @@ const about = {
 }
 
 const app = {
-  layouts: {
-    default: layout
-  },
+  layouts: { default: layout },
   pages: { home, about }
 }
 

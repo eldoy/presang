@@ -22,8 +22,8 @@
     "jest": "^24.9.0"
   },
   "dependencies": {
-    "conficurse": "0.0.8",
-    "haka": "^0.2.2",
+    "conficurse": "0.1.0",
+    "haka": "^0.3.0",
     "pretty": "^2.0.0",
     "sirloin": "^0.13.4",
     "wcookie": "^0.2.2"
