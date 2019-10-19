@@ -22,11 +22,7 @@
     "jest": "^24.9.0"
   },
   "dependencies": {
-<<<<<<< HEAD
     "conficurse": "0.1.0",
-=======
-    "conficurse": "0.0.8",
->>>>>>> 1f44405ca84fa6470219c34dac83bb219a6c3a9f
     "haka": "^0.3.0",
     "pretty": "^2.0.0",
     "sirloin": "^0.13.4",
