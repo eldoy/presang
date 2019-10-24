@@ -1,6 +1,6 @@
 {
   "name": "presang",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Compact web application framework",
   "main": "index.js",
   "bin": {
@@ -24,6 +24,7 @@
   "dependencies": {
     "conficurse": "0.1.0",
     "haka": "^0.4.0",
+    "lodash": "^4.17.15",
     "pretty": "^2.0.0",
     "sirloin": "^0.14.0"
   }
