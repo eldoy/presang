@@ -1,6 +1,6 @@
-const { h, t, q, qa, cookie } = require('presang')
+const { q, qa, text, html, cookie } = require('presang')
 
-module.exports = async function ($) {
+module.exports = async function($) {
   function current () {
     var a = q(`nav a[href="${ location.pathname }"]`) || q('nav a')
     a.classList.add('active-link')
@@ -12,7 +12,7 @@ module.exports = async function ($) {
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>${ $.page.title || 'Untitled' }</title>
         <link rel="stylesheet" href="/app.css" type="text/css">
-        <script>${ h }${ t }${ q }${ qa }${ cookie }</script>
+        <script>${ q }${ qa }${ text }${ html }${ cookie }</script>
       </head>
       <body>
         <div class="content">

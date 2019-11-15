@@ -105,7 +105,7 @@ Layouts surround your pages, it is where your title, head, nav and footer usuall
 ```javascript
 const { q, qa, cookie } = require('presang')
 
-module.exports = async function ($) {
+module.exports = async function($) {
   function current () {
     var a = q(`nav a[href="${ location.pathname }"]`) || q('nav a')
     a.classList.add('active-link')
@@ -153,7 +153,7 @@ module.exports = {
   title: 'home',
 
   // The render function is being rendred server side
-  render: async function ($) {
+  render: async function($) {
     return `
       <h1>home</h1>
       <p>

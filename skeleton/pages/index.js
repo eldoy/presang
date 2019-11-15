@@ -1,7 +1,7 @@
 module.exports = {
   layout: 'default',
   title: 'home',
-  render: async function ($) {
+  render: async function($) {
     return `
       <h1>home</h1>
       <p>

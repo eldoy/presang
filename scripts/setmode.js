@@ -12,7 +12,7 @@ function replaceIn (from, to) {
   to = matches[to]
 
   function replace (dir) {
-    fs.readdirSync(dir).forEach(function (f) {
+    fs.readdirSync(dir).forEach(function(f) {
       f = path.join(dir, f)
       if (fs.lstatSync(f).isFile()) {
         fs.writeFileSync(

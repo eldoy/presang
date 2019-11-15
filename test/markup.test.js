@@ -3,7 +3,7 @@ const markup = require('../lib/markup.js')
 
 const req = { pathname: '/' }
 const res = {
-  setHeader: function () {}
+  setHeader: function() {}
 }
 
 async function layout($) {
@@ -18,7 +18,7 @@ async function layout($) {
 
 const index = {
   title: 'home',
-  render: async function ($) {
+  render: async function($) {
     return `<div>Home</div>`
   }
 }
