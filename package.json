@@ -1,6 +1,6 @@
 {
   "name": "presang",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Compact web application framework",
   "main": "index.js",
   "bin": {
@@ -25,9 +25,11 @@
     "tiny",
     "web app",
     "framework",
+    "front end",
     "html",
     "template",
-    "literal"
+    "literal",
+    "no webpack"
   ],
   "devDependencies": {
     "jest": "^24.9.0"
