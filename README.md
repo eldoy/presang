@@ -80,7 +80,7 @@ Create HTML tags using template literals, or include your own template library.
 `<div>Hello ${ name }</div>`
 ```
 
-Find and manipulate HTML elements with `h`, `t`, `q` and `qa`. Read more about how to use them on the [Haka page](https://github.com/fugroup/haka).
+Find and manipulate HTML elements with `html`, `text`, `q` and `qa`. Read more about how to use them on the [Haka page](https://github.com/fugroup/haka).
 
 ### Components
 It is easy to create functional components:
@@ -103,7 +103,7 @@ function list (items) {
 ### Layouts
 Layouts surround your pages, it is where your title, head, nav and footer usually goes. You can have multiple layouts if you want.
 ```javascript
-const { q, qa, m, cookie } = require('presang')
+const { q, qa, cookie } = require('presang')
 
 module.exports = async function ($) {
   function current () {
@@ -121,7 +121,7 @@ module.exports = async function ($) {
         <link rel="stylesheet" href="/app.css" type="text/css">
 
         <--! Include global scripts here -->
-        <script>${ q };${ qa };${m};${ cookie }</script>
+        <script>${ q };${ qa };${ cookie }</script>
       </head>
       <body>
         <div class="content">
@@ -142,7 +142,7 @@ module.exports = async function ($) {
 ```
 
 ### Pages
-Pages are inserted into your layout. Links to internal pages must end with `.html`, and the `index.html` page (home page), must be named `home.js`.
+Pages are inserted into your layout. Links to internal pages must end with `.html`, and the `index.html` page (home page), must be named `index.js`.
 
 ```javascript
 module.exports = {

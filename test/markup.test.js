@@ -16,7 +16,7 @@ async function layout($) {
     </html>`
 }
 
-const home = {
+const index = {
   title: 'home',
   render: async function ($) {
     return `<div>Home</div>`
@@ -42,7 +42,7 @@ const app = {
     layouts: {
       default: layout
     },
-    home,
+    index,
     about,
     docs: {
       deep
