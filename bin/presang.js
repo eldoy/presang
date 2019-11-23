@@ -34,7 +34,7 @@ function create () {
       fs.lstatSync(f).isFile() ? fs.copyFileSync(f, t) : copyFolderSync(f, t)
     })
   }
-  copyFolderSync(path.join(base, 'skeleton'), path.join(root, 'app'))
+  copyFolderSync(path.join(base, 'app'), path.join(root, 'app'))
 }
 
 async function build () {

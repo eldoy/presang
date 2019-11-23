@@ -137,7 +137,8 @@ module.exports = async function($) {
         <--! Insert and call function on page load -->
         <script>${ current }; current()</script>
       </body>
-    </html>`
+    </html>
+  `
 }
 ```
 
@@ -145,22 +146,20 @@ module.exports = async function($) {
 Pages are inserted into your layout. Links to internal pages must end with `.html`, and the `index.html` page (home page), must be named `index.js`.
 
 ```javascript
-module.exports = {
-  // The name of the layout, defaults to 'default'
-  layout: 'default',
+module.exports = async function($) {
+  // Set the name of the layout, defaults to 'default'
+  $.page.layout = 'default',
 
   // The page title
-  title: 'home',
+  $.page.title = 'home'
 
-  // The render function is being rendred server side
-  render: async function($) {
-    return `
-      <h1>home</h1>
-      <p>
-        this is your shiny new blazing fast
-        <a href="https://github.com/fugroup/presang" target="_blank">presang app!</a>
-      </p>`
-  }
+  return `
+    <h1>home</h1>
+    <p>
+      this is your shiny new blazing fast
+      <a href="https://github.com/fugroup/presang" target="_blank">presang app!</a>
+    </p>
+  `
 }
 ```
 MIT Licensed. Enjoy!

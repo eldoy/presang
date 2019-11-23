@@ -10,31 +10,26 @@ async function layout($) {
   return `
     <!doctype html>
     <html>
+      <head><title>${ $.page.title }</title></head>
       <body>
         ${ $.page.content }
       </body>
     </html>`
 }
 
-const index = {
-  title: 'home',
-  render: async function($) {
-    return `<div>Home</div>`
-  }
+const index = async function($) {
+  $.page.title = 'Home'
+  return `<div>Home</div>`
 }
 
-const about = {
-  title: 'about',
-  render: async function about ($) {
-    return `<div>About</div>`
-  }
+const about = async function about($) {
+  $.page.title = 'About'
+  return `<div>About</div>`
 }
 
-const deep = {
-  title: 'deep',
-  render: async function deep ($) {
-    return `<div>Deep</div>`
-  }
+const deep = async function deep($) {
+  $.page.title = 'Deep'
+  return `<div>Deep</div>`
 }
 
 const app = {
@@ -56,26 +51,27 @@ describe('markup', () => {
   beforeEach(() => {
     req.pathname = '/'
   })
-  it('should load some HTML', async () => {
+
+  it('should load the home page', async () => {
     const result = await markup(req, res)($)
     expect(result.split('\n').map(x => x.trim()).join('')).toBe(
-      '<!doctype html><html><body><div>Home</div></body></html>'
+      '<!doctype html><html><head><title>Home</title></head><body><div>Home</div></body></html>'
     )
   })
 
-  it('should load some HTML', async () => {
+  it('should load the about page', async () => {
     req.pathname = '/about.html'
     const result = await markup(req, res)($)
     expect(result.split('\n').map(x => x.trim()).join('')).toBe(
-      '<!doctype html><html><body><div>About</div></body></html>'
+      '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
   })
 
-  it('should load some deep HTML', async () => {
+  it('should load the deep page', async () => {
     req.pathname = '/docs/deep.html'
     const result = await markup(req, res)($)
     expect(result.split('\n').map(x => x.trim()).join('')).toBe(
-      '<!doctype html><html><body><div>Deep</div></body></html>'
+      '<!doctype html><html><head><title>Deep</title></head><body><div>Deep</div></body></html>'
     )
   })
 
@@ -88,7 +84,7 @@ describe('markup', () => {
     }
     const result = await markup(req, res, options)($)
     expect(result.split('\n').map(x => x.trim()).join('')).toBe(
-      '<!doctype html><html><body><div>About</div></body></html>'
+      '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
   })
 })
