@@ -4,5 +4,6 @@ module.exports = async function($) {
     <p>
       this is your shiny new blazing fast
       <a href="https://github.com/fugroup/presang" target="_blank">presang app!</a>
-    </p>`
+    </p>
+  `
 }

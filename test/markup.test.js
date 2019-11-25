@@ -22,14 +22,19 @@ const index = async function($) {
   return `<div>Home</div>`
 }
 
-const about = async function about($) {
+const about = async function($) {
   $.page.title = 'About'
   return `<div>About</div>`
 }
 
-const deep = async function deep($) {
+const deep = async function($) {
   $.page.title = 'Deep'
   return `<div>Deep</div>`
+}
+
+const compile = async function($) {
+  $.page.title = 'Compile'
+  return `<div>Compile: ${ $.t('name') }</div>`
 }
 
 const app = {
@@ -39,13 +44,18 @@ const app = {
     },
     index,
     about,
+    compile,
     docs: {
       deep
     }
   }
 }
 
-const $ = { app, req, res }
+const t = function(key) {
+  return key
+}
+
+const $ = { app, req, res, t }
 
 describe('markup', () => {
   beforeEach(() => {
@@ -85,6 +95,15 @@ describe('markup', () => {
     const result = await markup(req, res, options)($)
     expect(result.split('\n').map(x => x.trim()).join('')).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
+    )
+  })
+
+  it('should compile templates', async () => {
+    req.pathname = '/compile.html'
+    const options = { compile: true }
+    const result = await markup(req, res, options)($)
+    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+      '<!doctype html><html><head><title>Compile</title></head><body><div>Compile: name</div></body></html>'
     )
   })
 })
