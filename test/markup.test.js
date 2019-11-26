@@ -85,11 +85,24 @@ describe('markup', () => {
     )
   })
 
-  it('should load pages via routemap option', async () => {
+  it('should load pages via routemap option as string', async () => {
     req.pathname = '/om-oss.html'
     const options = {
       routemap: {
-        '/om-oss.html': '/about.html'
+        '/om-oss.html': 'about'
+      }
+    }
+    const result = await markup(req, res, options)($)
+    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+      '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
+    )
+  })
+
+  it('should load pages via routemap option as object', async () => {
+    req.pathname = '/om-oss.html'
+    const options = {
+      routemap: {
+        '/om-oss.html': { page: 'about' }
       }
     }
     const result = await markup(req, res, options)($)
