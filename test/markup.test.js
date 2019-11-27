@@ -34,7 +34,10 @@ const deep = async function($) {
 
 const compile = async function($) {
   $.page.title = 'Compile'
-  return `<div>Compile: ${ $.t('name') }</div>`
+  function hello() {
+    return $.t('name')
+  }
+  return `<div>${ hello }</div>`
 }
 
 const app = {
@@ -116,7 +119,7 @@ describe('markup', () => {
     const options = { compile: true }
     const result = await markup(req, res, options)($)
     expect(result.split('\n').map(x => x.trim()).join('')).toBe(
-      '<!doctype html><html><head><title>Compile</title></head><body><div>Compile: name</div></body></html>'
+      `<!doctype html><html><head><title>Compile</title></head><body><div>function hello() {return 'name';}</div></body></html>`
     )
   })
 })
