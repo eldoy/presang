@@ -41,10 +41,10 @@ const compile = async function($) {
 }
 
 const app = {
+  layouts: {
+    default: layout
+  },
   pages: {
-    layouts: {
-      default: layout
-    },
     index,
     about,
     compile,
