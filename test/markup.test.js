@@ -92,7 +92,7 @@ describe('markup', () => {
     )
   })
 
-  it.only('should load pages via routemap option as string', async () => {
+  it('should load pages via routemap option as string', async () => {
     req.pathname = '/om-oss.html'
     const options = {
       routemap: {
