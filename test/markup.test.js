@@ -126,16 +126,17 @@ describe('markup', () => {
       `<!doctype html><html><head><title>Compile</title></head><body><div>function hello() {return 'name';}</div></body></html>`
     )
   })
-  // it.only('should work with catchall template', async () => {
-  //   const _index = async function($) {
-  //     return `<div>HTML</div>`
-  //   }
-  //   $.app = {
-  //     pages: {
-  //       _index
-  //     }
-  //   }
-  //   const result = await markup(req, res)($)
-  //   expect(flat(result)).toBe(`<div>HTML</div>`)
-  // })
+
+  it('should work with catchall template', async () => {
+    const _index = async function($) {
+      return `<div>HTML</div>`
+    }
+    $.app = {
+      pages: {
+        _index
+      }
+    }
+    const result = await markup(req, res)($)
+    expect(flat(result)).toBe(`<div>HTML</div>`)
+  })
 })
