@@ -60,6 +60,10 @@ const t = function(key) {
 
 const $ = { app, req, res, t }
 
+function flat(result) {
+  return (result || '').split('\n').map(x => x.trim()).join('')
+}
+
 describe('markup', () => {
   beforeEach(() => {
     req.pathname = '/'
@@ -67,7 +71,7 @@ describe('markup', () => {
 
   it('should load the home page', async () => {
     const result = await markup(req, res)($)
-    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+    expect(flat(result)).toBe(
       '<!doctype html><html><head><title>Home</title></head><body><div>Home</div></body></html>'
     )
   })
@@ -75,7 +79,7 @@ describe('markup', () => {
   it('should load the about page', async () => {
     req.pathname = '/about.html'
     const result = await markup(req, res)($)
-    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+    expect(flat(result)).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
   })
@@ -83,7 +87,7 @@ describe('markup', () => {
   it('should load the deep page', async () => {
     req.pathname = '/docs/deep.html'
     const result = await markup(req, res)($)
-    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+    expect(flat(result)).toBe(
       '<!doctype html><html><head><title>Deep</title></head><body><div>Deep</div></body></html>'
     )
   })
@@ -96,7 +100,7 @@ describe('markup', () => {
       }
     }
     const result = await markup(req, res, options)($)
-    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+    expect(flat(result)).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
   })
@@ -109,7 +113,7 @@ describe('markup', () => {
       }
     }
     const result = await markup(req, res, options)($)
-    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+    expect(flat(result)).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
   })
@@ -118,8 +122,20 @@ describe('markup', () => {
     req.pathname = '/compile.html'
     const options = { compile: true }
     const result = await markup(req, res, options)($)
-    expect(result.split('\n').map(x => x.trim()).join('')).toBe(
+    expect(flat(result)).toBe(
       `<!doctype html><html><head><title>Compile</title></head><body><div>function hello() {return 'name';}</div></body></html>`
     )
   })
+  // it.only('should work with catchall template', async () => {
+  //   const _index = async function($) {
+  //     return `<div>HTML</div>`
+  //   }
+  //   $.app = {
+  //     pages: {
+  //       _index
+  //     }
+  //   }
+  //   const result = await markup(req, res)($)
+  //   expect(flat(result)).toBe(`<div>HTML</div>`)
+  // })
 })
