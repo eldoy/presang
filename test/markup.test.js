@@ -92,7 +92,7 @@ describe('markup', () => {
     )
   })
 
-  it('should load pages via routemap option as string', async () => {
+  it.only('should load pages via routemap option as string', async () => {
     req.pathname = '/om-oss.html'
     const options = {
       routemap: {
@@ -102,6 +102,32 @@ describe('markup', () => {
     const result = await markup(req, res, options)($)
     expect(flat(result)).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
+    )
+  })
+
+  it('should load pages via routemap option as string deeply', async () => {
+    req.pathname = '/hello/om-oss.html'
+    const options = {
+      routemap: {
+        '/hello/om-oss.html': 'about'
+      }
+    }
+    const result = await markup(req, res, options)($)
+    expect(flat(result)).toBe(
+      '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
+    )
+  })
+
+  it('should load pages via routemap option as string deeply alternate', async () => {
+    req.pathname = '/hello/om-oss.html'
+    const options = {
+      routemap: {
+        '/hello/om-oss.html': 'docs/deep'
+      }
+    }
+    const result = await markup(req, res, options)($)
+    expect(flat(result)).toBe(
+      '<!doctype html><html><head><title>Deep</title></head><body><div>Deep</div></body></html>'
     )
   })
 
@@ -157,4 +183,77 @@ describe('markup', () => {
     const result = await markup(req, res)($)
     expect(flat(result)).toBe(`<div>2020/12</div>`)
   })
+
+  it('should escape catchall if template exists', async () => {
+    const _index = async function($) {
+      return `<div>HTML</div>`
+    }
+    $.app = {
+      pages: {
+        about,
+        _index
+      }
+    }
+    req.pathname = '/about.html'
+    const result = await markup(req, res)($)
+    expect(flat(result)).toBe(`<div>About</div>`)
+  })
+
+  it('should escape catchall if template exists, sorted', async () => {
+    const _index = async function($) {
+      return `<div>HTML</div>`
+    }
+    $.app = {
+      pages: {
+        _index,
+        about
+      }
+    }
+    req.pathname = '/about.html'
+    const result = await markup(req, res)($)
+    expect(flat(result)).toBe(`<div>About</div>`)
+  })
+
+  it('should work with catchall template and routemap option', async () => {
+    const _index = async function($) {
+      return `<div>HTML</div>`
+    }
+    $.app = {
+      pages: {
+        about,
+        _index
+      }
+    }
+    const options = {
+      routemap: {
+        '/something.html': { page: 'something' }
+      }
+    }
+    req.pathname = '/om-oss.html'
+    const result = await markup(req, res, options)($)
+    expect(flat(result)).toBe(`<div>HTML</div>`)
+  })
+
+  // it.only('should collect query params from URL with routemap option', async () => {
+  //   const article = async function($) {
+  //     return `<div>${$.req.query.year}/${$.req.query.month}</div>`
+  //   }
+  //   $.app = {
+  //     pages: {
+  //       _year: {
+  //         _month: {
+  //           article
+  //         }
+  //       }
+  //     }
+  //   }
+  //   const options = {
+  //     routemap: {
+  //       '/_year/_month/artikkel.html': { page: '/_year/_month/article' }
+  //     }
+  //   }
+  //   req.pathname = '/2020/12/artikkel.html'
+  //   const result = await markup(req, res, options)($)
+  //   expect(flat(result)).toBe(`<div>2020/12</div>`)
+  // })
 })
