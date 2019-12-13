@@ -1,7 +1,7 @@
 const loader = require('conficurse')
 const markup = require('../lib/markup.js')
 
-const req = { pathname: '/' }
+const req = { pathname: '/', query: {} }
 const res = {
   setHeader: function() {}
 }
@@ -138,5 +138,23 @@ describe('markup', () => {
     }
     const result = await markup(req, res)($)
     expect(flat(result)).toBe(`<div>HTML</div>`)
+  })
+
+  it('should collect query params from URL', async () => {
+    const article = async function($) {
+      return `<div>${$.req.query.year}/${$.req.query.month}</div>`
+    }
+    $.app = {
+      pages: {
+        _year: {
+          _month: {
+            article
+          }
+        }
+      }
+    }
+    req.pathname = '/2020/12/article.html'
+    const result = await markup(req, res)($)
+    expect(flat(result)).toBe(`<div>2020/12</div>`)
   })
 })
