@@ -234,26 +234,49 @@ describe('markup', () => {
     expect(flat(result)).toBe(`<div>HTML</div>`)
   })
 
-  // it.only('should collect query params from URL with routemap option', async () => {
-  //   const article = async function($) {
-  //     return `<div>${$.req.query.year}/${$.req.query.month}</div>`
-  //   }
-  //   $.app = {
-  //     pages: {
-  //       _year: {
-  //         _month: {
-  //           article
-  //         }
-  //       }
-  //     }
-  //   }
-  //   const options = {
-  //     routemap: {
-  //       '/_year/_month/artikkel.html': { page: '/_year/_month/article' }
-  //     }
-  //   }
-  //   req.pathname = '/2020/12/artikkel.html'
-  //   const result = await markup(req, res, options)($)
-  //   expect(flat(result)).toBe(`<div>2020/12</div>`)
-  // })
+  it('should collect query params from URL with routemap option', async () => {
+    const article = async function($) {
+      return `<div>${$.req.query.year}/${$.req.query.month}</div>`
+    }
+    $.app = {
+      pages: {
+        _year: {
+          _month: {
+            article
+          }
+        }
+      }
+    }
+    const options = {
+      routemap: {
+        '/_year/_month/artikkel.html': '_year/_month/article'
+      }
+    }
+    req.pathname = '/2020/12/artikkel.html'
+    const result = await markup(req, res, options)($)
+    expect(flat(result)).toBe(`<div>2020/12</div>`)
+  })
+
+  it('should collect query params from URL with routemap option as object', async () => {
+    const article = async function($) {
+      return `<div>${$.req.query.year}/${$.req.query.month}</div>`
+    }
+    $.app = {
+      pages: {
+        _year: {
+          _month: {
+            article
+          }
+        }
+      }
+    }
+    const options = {
+      routemap: {
+        '/_year/_month/artikkel.html': { page: '_year/_month/article' }
+      }
+    }
+    req.pathname = '/2020/12/artikkel.html'
+    const result = await markup(req, res, options)($)
+    expect(flat(result)).toBe(`<div>2020/12</div>`)
+  })
 })
