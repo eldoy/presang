@@ -84,6 +84,12 @@ describe('markup', () => {
     )
   })
 
+  it('should not load the about page when path is wrong', async () => {
+    req.pathname = '/something/about.html'
+    const result = await markup(req, res)($)
+    expect(result).toBeUndefined()
+  })
+
   it('should load the deep page', async () => {
     req.pathname = '/docs/deep.html'
     const result = await markup(req, res)($)
@@ -153,7 +159,7 @@ describe('markup', () => {
     )
   })
 
-  it('should work with catchall template', async () => {
+  it('should work with dynamic routes', async () => {
     const _index = async function($) {
       return `<div>HTML</div>`
     }
@@ -184,7 +190,7 @@ describe('markup', () => {
     expect(flat(result)).toBe(`<div>2020/12</div>`)
   })
 
-  it('should escape catchall if template exists', async () => {
+  it('should escape dynamic route if template exists', async () => {
     const _index = async function($) {
       return `<div>HTML</div>`
     }
@@ -199,7 +205,7 @@ describe('markup', () => {
     expect(flat(result)).toBe(`<div>About</div>`)
   })
 
-  it('should escape catchall if template exists, sorted', async () => {
+  it('should escape dynamic route if template exists, sorted', async () => {
     const _index = async function($) {
       return `<div>HTML</div>`
     }
@@ -214,7 +220,7 @@ describe('markup', () => {
     expect(flat(result)).toBe(`<div>About</div>`)
   })
 
-  it('should work with catchall template and routemap option', async () => {
+  it('should work with dynamic route and routemap option', async () => {
     const _index = async function($) {
       return `<div>HTML</div>`
     }
