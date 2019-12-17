@@ -1,4 +1,4 @@
-const { q, qa, text, html, cookie } = require('../../index.js')
+const { q, qa, text, html, cookie } = require('presang')
 
 module.exports = async function($) {
   function current () {
