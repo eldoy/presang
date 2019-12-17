@@ -14,9 +14,13 @@ npm i -g presang
 ```
 
 ### Usage
+Create a new app directory and run the following commands:
 ```
 // Create an app skeleton
 presang create
+
+// Init npm
+npm init
 
 // Install the presang library into your app
 npm i presang
@@ -29,8 +33,6 @@ const { q, qa, cookie } = require('presang')
 
 // Or in your custom server file
 const { server } = require('presang')
-
-// Start the server programmatically
 server()
 
 // Build app into static HTML

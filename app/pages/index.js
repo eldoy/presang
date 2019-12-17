@@ -1,5 +1,5 @@
 module.exports = async function($) {
-  return `
+  return /* html */`
     <h1>home</h1>
     <p>
       this is your shiny new blazing fast
