@@ -1,5 +1,3 @@
-const { q, qa, text, html, cookie } = require('presang')
-
 module.exports = async function($) {
   function current () {
     var a = q(`nav a[href="${ location.pathname }"]`) || q('nav a')
@@ -11,8 +9,8 @@ module.exports = async function($) {
       <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>${ $.page.title || 'Untitled' }</title>
-        <link rel="stylesheet" href="/app.css" type="text/css">
-        <script>${ q }${ qa }${ text }${ html }${ cookie }</script>
+        <link rel="stylesheet" href="/css/app.css" type="text/css">
+        <script src="/js/haka-min.js"></script>
       </head>
       <body>
         <div class="content">
