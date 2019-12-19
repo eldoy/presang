@@ -51,7 +51,7 @@ nav a.active-link, nav a:hover {
   border-bottom: 1px solid black;
 }
 
-main {
+div.main {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 1rem;

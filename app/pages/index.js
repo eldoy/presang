@@ -1,4 +1,6 @@
 module.exports = async function($) {
+  $.page.title = 'Home'
+
   return /* html */`
     <h1>home</h1>
     <p>

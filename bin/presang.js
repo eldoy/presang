@@ -56,8 +56,10 @@ async function build () {
 
   let pages
   try {
-    pages = find('pages')
-  } catch (e) {}
+    pages = find('app/pages')
+  } catch (e) {
+    console.log(e)
+  }
 
   if (!pages) {
     console.log('No pages found')
@@ -66,10 +68,8 @@ async function build () {
 
   let layouts
   try {
-    layouts = find('layouts')
-  } catch (e) {
-    layouts = [path.join(root, 'lib', 'layout')]
-  }
+    layouts = find('app/layouts')
+  } catch (e) {}
 
   fs.mkdirSync(dir)
 
@@ -84,15 +84,12 @@ async function build () {
     }
   } catch (e) {}
 
-  for (let key in pages) {
-    const page = pages[key]
-    const html = await layouts[page.layout || 'default'](page)
-    if (html) {
-      if (key === 'home') {
-        key = 'index'
-      }
-      fs.writeFileSync(path.join(dir, `${key}.html`), html)
-    }
+  for (const name in pages) {
+    const page = pages[name]
+    const $ = { page: { name } }
+    $.page.content = await page($)
+    $.page.content = await layouts['default']($)
+    fs.writeFileSync(path.join(dir, `${name}.html`), $.page.content)
   }
   console.log(`Files written to '${dir}'`)
 }

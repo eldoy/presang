@@ -18,7 +18,7 @@ module.exports = async function($) {
             <a href="/">home</a>
             <a href="/about.html">about</a>
           </nav>
-          <main>${ $.page.content }</main>
+          <div class="main">${ $.page.content }</div>
         </div>
         <script>${ current }; current()</script>
       </body>
