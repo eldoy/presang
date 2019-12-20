@@ -2,6 +2,8 @@
 const fs = require('fs')
 const path = require('path')
 const { server } = require('../index.js')
+const markup = require('../lib/markup.js')
+const loader = require('conficurse')
 
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve: server }
@@ -16,7 +18,7 @@ if (!fn) {
 }
 fn()
 
-function help () {
+function help() {
   console.log([
     '\nPresang commands:\n',
     'help - print this menu',
@@ -26,22 +28,31 @@ function help () {
   ].join('\n'))
 }
 
-function create () {
-  function copyFolderSync(from, to) {
-    fs.mkdirSync(to)
-    fs.readdirSync(from).forEach(function(item) {
-      const [f, t] = [path.join(from, item), path.join(to, item)]
-      fs.lstatSync(f).isFile() ? fs.copyFileSync(f, t) : copyFolderSync(f, t)
-    })
-  }
+function mkdir(to) {
+  try {
+    fs.mkdirSync(to, { recursive: true })
+  } catch (e) {}
+}
+
+function copyFolderSync(from, to) {
+  mkdir(to)
+  fs.readdirSync(from).forEach(function(item) {
+    const [f, t] = [path.join(from, item), path.join(to, item)]
+    fs.lstatSync(f).isFile() ? fs.copyFileSync(f, t) : copyFolderSync(f, t)
+  })
+}
+
+function create() {
   copyFolderSync(path.join(base, 'app'), path.join(root, 'app'))
 }
 
-async function build () {
-  function read (name) {
+async function build() {
+  function read(name) {
+    console.log(name)
     return fs.readdirSync(path.join(root, name))
   }
-  function find (name) {
+
+  function find(name) {
     const names = read(name)
     const result = {}
     for (const x of names) {
@@ -49,47 +60,44 @@ async function build () {
     }
     return result
   }
+
+  function tree(dir) {
+    return fs.readdirSync(dir).reduce(function(files, file) {
+      const name = path.join(dir, file)
+      const list = fs.statSync(name).isDirectory() ? tree(name) : name
+      return files.concat(list)
+    }, [])
+  }
+
   if (fs.existsSync(dir)) {
     console.log(`Directory '${dir}' already exists, please delete it or give another name`)
     process.exit(1)
   }
-
-  let pages
-  try {
-    pages = find('app/pages')
-  } catch (e) {
-    console.log(e)
-  }
-
-  if (!pages) {
-    console.log('No pages found')
-    process.exit(1)
-  }
-
-  let layouts
-  try {
-    layouts = find('app/layouts')
-  } catch (e) {}
-
   fs.mkdirSync(dir)
 
-  let assets
-  try {
-    assets = read('assets').map(x => [
-      path.join(root, 'assets', x),
-      path.join(dir, x)
-    ])
-    for (const dest of assets) {
-      fs.copyFileSync(dest[0], dest[1])
-    }
-  } catch (e) {}
-
-  for (const name in pages) {
-    const page = pages[name]
-    const $ = { page: { name } }
-    $.page.content = await page($)
-    $.page.content = await layouts['default']($)
-    fs.writeFileSync(path.join(dir, `${name}.html`), $.page.content)
+  const app = {
+    layouts: loader.load('app/layouts'),
+    pages: loader.load('app/pages')
   }
+
+  const files = tree('app/pages')
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i]
+    const name = file.split('/').slice(2)
+    const paths = name.slice(0, -1)
+    const filename = name.slice(-1)[0]
+    mkdir(path.join(dir, ...paths))
+    const pathname = `/${name.join('/')}`.replace(/\.js$/, '.html')
+    const req = { pathname, query: {} }
+    const res = { setHeader: function() {} }
+    const t = function(key) { return key }
+    const $ = { app, req, res, t }
+    const html = await markup(req, res)($)
+    fs.writeFileSync(path.join(dir, pathname.slice(1)), html)
+  }
+
+  // Copy assets
+  copyFolderSync('app/assets', 'dist')
+
   console.log(`Files written to '${dir}'`)
 }
