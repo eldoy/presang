@@ -1,6 +1,6 @@
 {
   "name": "presang",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Compact web application framework",
   "main": "index.js",
   "bin": {
