@@ -37,6 +37,6 @@
   "dependencies": {
     "conficurse": "0.1.0",
     "pretty": "^2.0.0",
-    "sirloin": "^0.14.2"
+    "sirloin": "^0.14.8"
   }
 }
