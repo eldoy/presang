@@ -80,6 +80,10 @@ async function build() {
     pages: loader.load('app/pages')
   }
 
+  const req = { query: {} }
+  const res = { setHeader: function() {} }
+  const t = function(key) { return key }
+
   const files = tree('app/pages')
   for (let i = 0; i < files.length; i++) {
     const file = files[i]
@@ -87,13 +91,10 @@ async function build() {
     const paths = name.slice(0, -1)
     const filename = name.slice(-1)[0]
     mkdir(path.join(dir, ...paths))
-    const pathname = `/${name.join('/')}`.replace(/\.js$/, '.html')
-    const req = { pathname, query: {} }
-    const res = { setHeader: function() {} }
-    const t = function(key) { return key }
+    req.pathname = `/${name.join('/')}`.replace(/\.js$/, '.html')
     const $ = { app, req, res, t }
     const html = await markup(req, res)($)
-    fs.writeFileSync(path.join(dir, pathname.slice(1)), html)
+    fs.writeFileSync(path.join(dir, req.pathname.slice(1)), html)
   }
 
   // Copy assets

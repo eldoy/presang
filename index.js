@@ -1,4 +1,5 @@
 const haka = require('haka')
 const markup = require('./lib/markup.js')
 const server = require('./lib/server.js')
-module.exports = { markup, server, ...haka }
+const i18n = require('./lib/i18n.js')
+module.exports = { markup, server, i18n, ...haka }
