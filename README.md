@@ -28,18 +28,19 @@ npm i presang
 // Go to your presang app directory and start the server
 presang serve
 
-// Require needed libraries inside your layouts and pages
-const { q, qa, cookie } = require('presang')
-
 // Or in your custom server file
 const { server } = require('presang')
 server()
 
-// Build app into static HTML
+// Build static HTML into './dist' directory
 presang build
 
-// Build into custom directory, default is './dist'
-presang build dir
+// Specify build file with dynamic links
+presang build build.js
+
+module.exports = async function() {
+  return ['posts/space.js']
+}
 
 // Command line help
 presang help

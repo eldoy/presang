@@ -8,7 +8,7 @@ const loader = require('conficurse')
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve: server }
 const root = process.cwd()
-const dir = path.join(root, process.argv[3] || 'dist')
+const dir = path.join(root, 'dist')
 const base = path.resolve(path.join(__dirname, '..'))
 
 const fn = commands[cmd]
@@ -84,10 +84,23 @@ async function build() {
   const res = { setHeader: function() {} }
   const t = function(key) { return key }
 
-  const files = tree('app/pages')
+  let files = tree('app/pages')
+    .filter(file => !file.includes('/_'))
+    .map(file => file.replace(/^app\/pages\//, ''))
+
+  // Include files from build file
+  const buildFile = process.argv[3]
+  if (buildFile) {
+    const builder = require(path.join(root, buildFile))
+    const buildPaths = await builder()
+    if (Array.isArray(buildPaths) && buildPaths.length) {
+      files = files.concat(buildPaths)
+    }
+  }
+
+  // Build HTML
   for (let i = 0; i < files.length; i++) {
-    const file = files[i]
-    const name = file.split('/').slice(2)
+    const name = files[i].split('/')
     const paths = name.slice(0, -1)
     const filename = name.slice(-1)[0]
     mkdir(path.join(dir, ...paths))
