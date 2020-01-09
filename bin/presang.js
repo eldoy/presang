@@ -8,7 +8,7 @@ const loader = require('conficurse')
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve: server }
 const root = process.cwd()
-const dir = path.join(root, 'dist')
+const dist = path.join(root, 'dist')
 const base = path.resolve(path.join(__dirname, '..'))
 
 const fn = commands[cmd]
@@ -69,11 +69,11 @@ async function build() {
     }, [])
   }
 
-  if (fs.existsSync(dir)) {
-    console.log(`Directory '${dir}' already exists, please delete it or give another name`)
+  if (fs.existsSync(dist)) {
+    console.log(`Directory '${dist}' already exists, please delete it or give another name`)
     process.exit(1)
   }
-  fs.mkdirSync(dir)
+  fs.mkdirSync(dist)
 
   const app = {
     layouts: loader.load('app/layouts'),
@@ -91,7 +91,13 @@ async function build() {
   // Include files from build file
   const buildFile = process.argv[3]
   if (buildFile) {
-    const builder = require(path.join(root, buildFile))
+    let builder
+    try {
+      builder = require(path.join(root, buildFile))
+    } catch (e) {
+      console.log(`Can not find build file ${buildFile}`)
+      process.exit(1)
+    }
     const buildPaths = await builder()
     if (Array.isArray(buildPaths) && buildPaths.length) {
       files = files.concat(buildPaths)
@@ -103,15 +109,15 @@ async function build() {
     const name = files[i].split('/')
     const paths = name.slice(0, -1)
     const filename = name.slice(-1)[0]
-    mkdir(path.join(dir, ...paths))
+    mkdir(path.join(dist, ...paths))
     req.pathname = `/${name.join('/')}`.replace(/\.js$/, '.html')
     const $ = { app, req, res, t }
     const html = await markup(req, res)($)
-    fs.writeFileSync(path.join(dir, req.pathname.slice(1)), html)
+    fs.writeFileSync(path.join(dist, req.pathname.slice(1)), html)
   }
 
   // Copy assets
   copyFolderSync('app/assets', 'dist')
 
-  console.log(`Files written to '${dir}'`)
+  console.log(`Files written to '${dist}'`)
 }
