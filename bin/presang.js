@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const path = require('path')
+const request = require('request')
 const { server } = require('../index.js')
-const markup = require('../lib/markup.js')
-const loader = require('conficurse')
 
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve: server }
@@ -69,51 +68,37 @@ async function build() {
     }, [])
   }
 
-  if (fs.existsSync(dist)) {
-    console.log(`Directory '${dist}' already exists, please delete it or give another name`)
+  if (!fs.existsSync(dist)) {
+    fs.mkdirSync(dist)
+  }
+
+  await new Promise(r => setTimeout(r, 500))
+
+  let files = []
+  const buildFile = process.argv[3] || 'build.js'
+  let builder
+  try {
+    builder = await require(path.join(root, buildFile))()
+  } catch (e) {
+    console.log(`Can not build using file '${buildFile}'`)
     process.exit(1)
   }
-  fs.mkdirSync(dist)
 
-  const app = {
-    layouts: loader.load('app/layouts'),
-    pages: loader.load('app/pages')
-  }
-
-  const req = { query: {} }
-  const res = { setHeader: function() {} }
-  const t = function(key) { return key }
-
-  let files = tree('app/pages')
-    .filter(file => !file.includes('/_'))
-    .map(file => file.replace(/^app\/pages\//, ''))
-
-  // Include files from build file
-  const buildFile = process.argv[3]
-  if (buildFile) {
-    let builder
+  for (const url of builder.urls) {
+    let name = url
+    if (name.endsWith('/')) {
+      name += 'index.html'
+    }
+    const dir = path.dirname(name)
+    const file = path.basename(name)
+    mkdir(path.join(dist, dir))
+    const stream = fs.createWriteStream(path.join(dist, dir, file))
+    const address = `${builder.host}${url}`
     try {
-      builder = require(path.join(root, buildFile))
-    } catch (e) {
-      console.log(`Can not find build file ${buildFile}`)
-      process.exit(1)
+      request.get(address).pipe(stream)
+    } catch(e) {
+      console.log(`Can't connect to ${address}`)
     }
-    const buildPaths = await builder()
-    if (Array.isArray(buildPaths) && buildPaths.length) {
-      files = files.concat(buildPaths)
-    }
-  }
-
-  // Build HTML
-  for (let i = 0; i < files.length; i++) {
-    const name = files[i].split('/')
-    const paths = name.slice(0, -1)
-    const filename = name.slice(-1)[0]
-    mkdir(path.join(dist, ...paths))
-    req.pathname = `/${name.join('/')}`.replace(/\.js$/, '.html')
-    const $ = { app, req, res, t }
-    const html = await markup(req, res)($)
-    fs.writeFileSync(path.join(dist, req.pathname.slice(1)), html)
   }
 
   // Copy assets

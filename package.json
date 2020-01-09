@@ -36,7 +36,9 @@
   },
   "dependencies": {
     "conficurse": "0.1.0",
+    "lodash": "^4.17.15",
     "pretty": "^2.0.0",
+    "request": "^2.88.0",
     "sirloin": "^0.14.8"
   }
 }

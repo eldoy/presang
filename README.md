@@ -38,8 +38,12 @@ presang build
 // Specify build file with dynamic links
 presang build build.js
 
+// The build file should look like this
 module.exports = async function() {
-  return ['posts/space.js']
+  return {
+    host: 'http://localhost:5000',
+    urls: ['/', '/about.html']
+  }
 }
 
 // Command line help
