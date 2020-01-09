@@ -47,7 +47,6 @@ function create() {
 
 async function build() {
   function read(name) {
-    console.log(name)
     return fs.readdirSync(path.join(root, name))
   }
 
@@ -72,9 +71,6 @@ async function build() {
     fs.mkdirSync(dist)
   }
 
-  await new Promise(r => setTimeout(r, 500))
-
-  let files = []
   const buildFile = process.argv[3] || 'build.js'
   let builder
   try {
@@ -95,7 +91,7 @@ async function build() {
     const stream = fs.createWriteStream(path.join(dist, dir, file))
     const address = `${builder.host}${url}`
     try {
-      request.get(address).pipe(stream)
+      request.get({ url: address, gzip: true }).pipe(stream)
     } catch(e) {
       console.log(`Can't connect to ${address}`)
     }

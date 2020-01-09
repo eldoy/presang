@@ -1,7 +1,7 @@
 {
   "name": "presang",
-  "version": "0.7.4",
-  "description": "Compact web application framework",
+  "version": "0.7.5",
+  "description": "Jamstack web application framework",
   "main": "index.js",
   "bin": {
     "presang": "./bin/presang.js"
@@ -29,7 +29,11 @@
     "html",
     "template",
     "literal",
-    "no webpack"
+    "no webpack",
+    "ssr",
+    "static site generator",
+    "isomorphic",
+    "jamstack"
   ],
   "devDependencies": {
     "jest": "^24.9.0"
