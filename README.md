@@ -5,7 +5,6 @@ Includes a minimal server. Layouts and pages are loaded into memory on startup f
 
 You can completely control what gets included on the server and what gets loaded after the page is served in the browser without any magic.
 
-Have a look at the [Presang demo](https://github.com/fugroup/presang-demo) for a full example with code.
 
 ### Install
 ```
@@ -87,7 +86,7 @@ Create HTML tags using template literals, or include your own template library.
 `<div>Hello ${ name }</div>`
 ```
 
-You don't really need a HTML DOM library, but the examples uses [Haka,](https://github.com/fugroup/haka) where you find and manipulate HTML elements with `html`, `text`, `q` and `qa`. You can also use libraries like [JQuery][https://jquery.com] if you want.
+You don't really need a HTML DOM library, but the examples uses [Haka,](https://github.com/eldoy/haka) where you find and manipulate HTML elements with `html`, `text`, `q` and `qa`. You can also use libraries like [JQuery][https://jquery.com] if you want.
 
 ### Components
 It is easy to create functional components:
@@ -160,11 +159,11 @@ module.exports = async function($) {
   // The page title
   $.page.title = 'home'
 
-  return `
+  return /* html */`
     <h1>home</h1>
     <p>
       this is your shiny new blazing fast
-      <a href="https://github.com/fugroup/presang" target="_blank">presang app!</a>
+      <a href="https://github.com/eldoy/presang" target="_blank">presang app!</a>
     </p>
   `
 }
