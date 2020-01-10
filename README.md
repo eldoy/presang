@@ -116,7 +116,7 @@ module.exports = async function($) {
     var a = q(`nav a[href="${ location.pathname }"]`) || q('nav a')
     a.classList.add('active-link')
   }
-  return `
+  return /* html */`
     <!doctype html>
     <html lang="en">
       <head>
@@ -168,4 +168,6 @@ module.exports = async function($) {
   `
 }
 ```
+Dynamic URLs can be achieved by using an underscore (`_`) in front of the directory name or the file name. For example, the structure `/posts/_id` will match the URL `/posts/hello.html` and `$.req.query.id` will have the value `hello` inside your page.
+
 MIT Licensed. Enjoy!

@@ -1,6 +1,6 @@
 {
   "name": "presang",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "Jamstack web application framework",
   "main": "index.js",
   "bin": {
