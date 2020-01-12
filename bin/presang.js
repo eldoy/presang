@@ -5,7 +5,7 @@ const request = require('request')
 const { server } = require('../index.js')
 
 const cmd = process.argv[2] || 'help'
-const commands = { app, build, help, serve: server }
+const commands = { create, build, help, serve: server }
 const root = process.cwd()
 const dist = path.join(root, 'dist')
 const base = path.resolve(path.join(__dirname, '..'))
@@ -21,9 +21,9 @@ function help() {
   console.log([
     '\nPresang commands:\n',
     'help - print this menu',
-    'create - set up a minimal app',
+    'create - create a minimal app',
     'serve - start the server',
-    'build - build a static app\n'
+    'build - build a static app'
   ].join('\n'))
 }
 
@@ -41,7 +41,7 @@ function copyFolderSync(from, to) {
   })
 }
 
-function app() {
+function create() {
   copyFolderSync(path.join(base, 'app'), path.join(root, 'app'))
 }
 
