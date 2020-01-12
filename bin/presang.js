@@ -5,7 +5,7 @@ const request = require('request')
 const { server } = require('../index.js')
 
 const cmd = process.argv[2] || 'help'
-const commands = { create, build, help, serve: server }
+const commands = { app, build, help, serve: server }
 const root = process.cwd()
 const dist = path.join(root, 'dist')
 const base = path.resolve(path.join(__dirname, '..'))
@@ -41,7 +41,7 @@ function copyFolderSync(from, to) {
   })
 }
 
-function create() {
+function app() {
   copyFolderSync(path.join(base, 'app'), path.join(root, 'app'))
 }
 
