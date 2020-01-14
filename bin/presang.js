@@ -5,7 +5,7 @@ const request = require('request')
 const { server } = require('../index.js')
 
 const cmd = process.argv[2] || 'help'
-const commands = { create, build, help, serve: server }
+const commands = { create, build, help, start: server }
 const root = process.cwd()
 const dist = path.join(root, 'dist')
 const base = path.resolve(path.join(__dirname, '..'))
@@ -20,10 +20,10 @@ fn()
 function help() {
   console.log([
     '\nPresang commands:\n',
-    'help - print this menu',
     'create - create a minimal app',
-    'serve - start the server',
-    'build - build a static app'
+    'start  - start the server',
+    'build  - build a static app',
+    'help   - print this menu'
   ].join('\n'))
 }
 
