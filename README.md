@@ -86,7 +86,9 @@ Create HTML tags using template literals, or include your own template library.
 `<div>Hello ${ name }</div>`
 ```
 
-You don't really need a HTML DOM library, but the examples uses [Haka,](https://github.com/eldoy/haka) where you find and manipulate HTML elements with `html`, `text`, `q` and `qa`. You can also use libraries like [JQuery][https://jquery.com] if you want.
+You don't really need a HTML DOM library, but the examples uses [Haka,](https://github.com/eldoy/haka) where you can find and manipulate HTML elements with `html`, `text`, `q` and `qa`, as well as cookie and form handling functions.
+
+You can also use libraries like [JQuery](https://jquery.com) if you want, it's up to you.
 
 ### Components
 It is easy to create functional components:
