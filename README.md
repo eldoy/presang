@@ -28,8 +28,8 @@ npm i presang
 presang serve
 
 // Or in your custom server file
-const { server } = require('presang')
-server()
+const { serve } = require('presang')
+serve()
 
 // Build static HTML into './dist' directory
 presang build
