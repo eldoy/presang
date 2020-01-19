@@ -1,6 +1,6 @@
 {
   "name": "presang",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Jamstack static site generator web application framework",
   "main": "index.js",
   "bin": {
@@ -39,6 +39,7 @@
     "jest": "^24.9.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "conficurse": "0.1.0",
     "lodash": "^4.17.15",
     "pretty": "^2.0.0",
