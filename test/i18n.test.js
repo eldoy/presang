@@ -107,11 +107,10 @@ describe('link', () => {
   })
 
   it('should return the correct link for routemap with translations', async () => {
-    const routes = {
-      routemap: {
-        '/about.html': { page: 'about', lang: 'en' },
-        '/om-oss.html': { page: 'about', lang: 'no' }
-      }
+    const routes = {}
+    routes.routemap = {
+      '/about.html': { page: 'about', lang: 'en' },
+      '/om-oss.html': { page: 'about', lang: 'no' }
     }
     const link = i18n.link(routes)
     let result = link('about')
