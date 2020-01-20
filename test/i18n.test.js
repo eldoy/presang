@@ -106,7 +106,7 @@ describe('link', () => {
     expect(result).toBe('/om-oss.html')
   })
 
-  it('should return the correct link for routemap with translations', async () => {
+  it('should return the correct link for routemap', async () => {
     const routes = {}
     routes.routemap = {
       '/about.html': { page: 'about', lang: 'en' },
@@ -121,6 +121,20 @@ describe('link', () => {
 
     result = link('about', { lang: 'no' })
     expect(result).toBe('/om-oss.html')
+  })
+
+  it('should return the correct link for routemap index', async () => {
+    const routes = {}
+    routes.routemap = {
+      '/': { page: 'index', lang: 'no' },
+      '/en/': { page: 'index', lang: 'en' }
+    }
+    const link = i18n.link(routes)
+    let result = link('index')
+    expect(result).toBe('/')
+
+    result = link('index', { lang: 'en' })
+    expect(result).toBe('/en/')
   })
 
   it('should return the correct link with dynamic routes', async () => {
