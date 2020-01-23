@@ -175,6 +175,38 @@ describe('markup', () => {
     expect(flat(result)).toBe(`<div>HTML</div>`)
   })
 
+  it('should work with nested dynamic index routes', async () => {
+    req.pathname = '/doc/hello.html'
+    const _index = async function($) {
+      return `<div>${$.req.query.index}</div>`
+    }
+    $.app = {
+      pages: {
+        doc: {
+          _index
+        }
+      }
+    }
+    const result = await markup($)
+    expect(flat(result)).toBe(`<div>hello</div>`)
+  })
+
+  it('should work with nested dynamic index routes', async () => {
+    req.pathname = '/doc/hello.html'
+    const _actions = async function($) {
+      return `<div>${$.req.query.actions}</div>`
+    }
+    $.app = {
+      pages: {
+        doc: {
+          _actions
+        }
+      }
+    }
+    const result = await markup($)
+    expect(flat(result)).toBe(`<div>hello</div>`)
+  })
+
   it('should collect query params from URL', async () => {
     const article = async function($) {
       return `<div>${$.req.query.year}/${$.req.query.month}</div>`
