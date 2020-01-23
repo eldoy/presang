@@ -58,7 +58,7 @@ const t = function(key) {
   return key
 }
 
-const $ = { app, req, res, t }
+let $
 
 function flat(result) {
   return (result || '').split('\n').map(x => x.trim()).join('')
@@ -66,6 +66,7 @@ function flat(result) {
 
 describe('markup', () => {
   beforeEach(() => {
+    $ = { app, req, res, t }
     req.pathname = '/'
   })
 
@@ -100,12 +101,12 @@ describe('markup', () => {
 
   it('should load pages via routemap option as string', async () => {
     req.pathname = '/om-oss.html'
-    const options = {
-      routemap: {
-        '/om-oss.html': 'about'
+    $.app.config = {
+      routes: {
+        routemap: { '/om-oss.html': 'about' }
       }
     }
-    const result = await markup(options)($)
+    const result = await markup()($)
     expect(flat(result)).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
@@ -113,12 +114,12 @@ describe('markup', () => {
 
   it('should load pages via routemap option as string deeply', async () => {
     req.pathname = '/hello/om-oss.html'
-    const options = {
-      routemap: {
-        '/hello/om-oss.html': 'about'
+     $.app.config = {
+      routes: {
+        routemap: { '/hello/om-oss.html': 'about' }
       }
     }
-    const result = await markup(options)($)
+    const result = await markup()($)
     expect(flat(result)).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
@@ -126,12 +127,12 @@ describe('markup', () => {
 
   it('should load pages via routemap option as string deeply alternate', async () => {
     req.pathname = '/hello/om-oss.html'
-    const options = {
-      routemap: {
-        '/hello/om-oss.html': 'docs/deep'
+    $.app.config = {
+      routes: {
+        routemap: { '/hello/om-oss.html': 'docs/deep' }
       }
     }
-    const result = await markup(options)($)
+    const result = await markup()($)
     expect(flat(result)).toBe(
       '<!doctype html><html><head><title>Deep</title></head><body><div>Deep</div></body></html>'
     )
@@ -139,12 +140,12 @@ describe('markup', () => {
 
   it('should load pages via routemap option as object', async () => {
     req.pathname = '/om-oss.html'
-    const options = {
-      routemap: {
-        '/om-oss.html': { page: 'about' }
+    $.app.config = {
+      routes: {
+        routemap: { '/om-oss.html': { page: 'about' } }
       }
     }
-    const result = await markup(options)($)
+    const result = await markup()($)
     expect(flat(result)).toBe(
       '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
     )
@@ -152,8 +153,10 @@ describe('markup', () => {
 
   it('should compile templates', async () => {
     req.pathname = '/compile.html'
-    const options = { compile: true }
-    const result = await markup(options)($)
+    $.app.config = {
+      routes: { compile: true }
+    }
+    const result = await markup()($)
     expect(flat(result)).toBe(
       `<!doctype html><html><head><title>Compile</title></head><body><div>function hello() {return 'name';}</div></body></html>`
     )
@@ -228,15 +231,17 @@ describe('markup', () => {
       pages: {
         about,
         _index
-      }
-    }
-    const options = {
-      routemap: {
-        '/something.html': { page: 'something' }
+      },
+      config: {
+        routes: {
+          routemap: {
+            '/something.html': { page: 'something' }
+          }
+        }
       }
     }
     req.pathname = '/om-oss.html'
-    const result = await markup(options)($)
+    const result = await markup()($)
     expect(flat(result)).toBe(`<div>HTML</div>`)
   })
 
@@ -251,15 +256,17 @@ describe('markup', () => {
             article
           }
         }
-      }
-    }
-    const options = {
-      routemap: {
-        '/_year/_month/artikkel.html': '_year/_month/article'
+      },
+      config: {
+        routes: {
+          routemap: {
+            '/_year/_month/artikkel.html': '_year/_month/article'
+          }
+        }
       }
     }
     req.pathname = '/2020/12/artikkel.html'
-    const result = await markup(options)($)
+    const result = await markup()($)
     expect(flat(result)).toBe(`<div>2020/12</div>`)
   })
 
@@ -274,15 +281,17 @@ describe('markup', () => {
             article
           }
         }
-      }
-    }
-    const options = {
-      routemap: {
-        '/_year/_month/artikkel.html': { page: '_year/_month/article' }
+      },
+      config: {
+        routes: {
+          routemap: {
+            '/_year/_month/artikkel.html': { page: '_year/_month/article' }
+          }
+        }
       }
     }
     req.pathname = '/2020/12/artikkel.html'
-    const result = await markup(options)($)
+    const result = await markup()($)
     expect(flat(result)).toBe(`<div>2020/12</div>`)
   })
 })
