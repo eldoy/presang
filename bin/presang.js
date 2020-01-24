@@ -2,7 +2,8 @@
 const fs = require('fs')
 const path = require('path')
 const request = require('request')
-const { serve } = require('../index.js')
+const loader = require('conficurse')
+const { serve, bundler } = require('../index.js')
 
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve }
@@ -91,10 +92,29 @@ async function build() {
     const stream = fs.createWriteStream(path.join(dist, dir, file))
     const address = `${builder.host}${url}`
     try {
-      request.get({ url: address, gzip: true }).pipe(stream)
+      request.get({
+        url: address,
+        gzip: true,
+        headers: { 'x-waveorb': 'build' }
+      }).pipe(stream)
     } catch(e) {
       console.log(`Can't connect to ${address}`)
     }
+  }
+
+  // Build assets
+  const config = loader.load('app/config')
+  if (config.assets) {
+    Object.keys(config.assets).forEach(function(type) {
+      console.log(`Building ${type} files...`)
+      const files = config.assets[type] || []
+      const bundle = files.map(function(file) {
+        const inpath = path.join(root, 'app', 'assets', file)
+        return fs.readFileSync(inpath, 'utf-8')
+      }).join(type === 'js' ? ';' : '\n')
+      const outpath = path.join(dist, `bundle.${type}`)
+      fs.writeFileSync(outpath, bundle)
+    })
   }
 
   // Copy assets
