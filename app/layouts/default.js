@@ -8,9 +8,9 @@ module.exports = async function($) {
     <html lang="en">
       <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <title>${ $.page.title || 'Untitled' }</title>
-        <link rel="stylesheet" href="/css/app.css" type="text/css">
-        <script src="/js/haka-min.js"></script>
+        <title>${ $.page.title || 'Presang' }</title>
+        ${ $.css('/bundle.css') }
+        ${ $.js('/bundle.js') }
       </head>
       <body>
         <div class="content">
