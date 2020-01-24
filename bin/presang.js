@@ -2,9 +2,8 @@
 const fs = require('fs')
 const path = require('path')
 const request = require('request')
-const loader = require('conficurse')
-const { serve, bundler } = require('../index.js')
-
+const loader = require('../lib/loader.js')
+const serve = require('../lib/serve.js')
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve }
 const root = process.cwd()
@@ -103,11 +102,12 @@ async function build() {
   }
 
   // Build assets
-  const config = loader.load('app/config')
-  if (config.assets) {
-    Object.keys(config.assets).forEach(function(type) {
+  const app = await loader()
+  const assets = app.config.assets
+  if (assets) {
+    Object.keys(assets).forEach(function(type) {
       console.log(`Building ${type} files...`)
-      const files = config.assets[type] || []
+      const files = assets[type] || []
       const bundle = files.map(function(file) {
         const inpath = path.join(root, 'app', 'assets', file)
         return fs.readFileSync(inpath, 'utf-8')
