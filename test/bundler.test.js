@@ -1,17 +1,17 @@
 const bundler = require('../lib/bundler.js')
 let assets
 
-describe('js', () => {
+describe('script', () => {
   beforeEach(() => {
     assets = bundler()
   })
   it('should create a js tag', async () => {
-    const tag = assets.js('app.js')
+    const tag = assets.script('app.js')
     expect(tag).toBe('<script src="app.js"></script>')
   })
 
   it('should create multiple js tags', async () => {
-    const tag = assets.js('app.js', 'hello.js')
+    const tag = assets.script('app.js', 'hello.js')
     expect(tag).toBe('<script src="app.js"></script><script src="hello.js"></script>')
   })
 
@@ -24,7 +24,7 @@ describe('js', () => {
       }
     }
     assets = bundler(app.config.assets)
-    const tag = assets.js('bundle.js')
+    const tag = assets.script('bundle.js')
     expect(tag).toBe('<script src="app.js"></script>')
   })
 
@@ -37,19 +37,19 @@ describe('js', () => {
       }
     }
     assets = bundler(app.config.assets, { bundle: true })
-    const tag = assets.js('bundle.js')
+    const tag = assets.script('bundle.js')
     expect(tag).toBe('<script src="bundle.js"></script>')
   })
 })
 
-describe('css', () => {
+describe('style', () => {
   it('should create a css tag', async () => {
-    const tag = assets.css('app.css')
+    const tag = assets.style('app.css')
     expect(tag).toBe('<link href="app.css" rel="stylesheet" type="text/css">')
   })
 
   it('should create multiple css tags', async () => {
-    const tag = assets.css('app.css', 'hello.css')
+    const tag = assets.style('app.css', 'hello.css')
     expect(tag).toBe('<link href="app.css" rel="stylesheet" type="text/css"><link href="hello.css" rel="stylesheet" type="text/css">')
   })
 
@@ -62,7 +62,7 @@ describe('css', () => {
       }
     }
     assets = bundler(app.config.assets)
-    const tag = assets.css('bundle.css')
+    const tag = assets.style('bundle.css')
     expect(tag).toBe('<link href="app.css" rel="stylesheet" type="text/css">')
   })
 
@@ -75,7 +75,7 @@ describe('css', () => {
       }
     }
     assets = bundler(app.config.assets, { bundle: true })
-    const tag = assets.css('bundle.css')
+    const tag = assets.style('bundle.css')
     expect(tag).toBe('<link href="bundle.css" rel="stylesheet" type="text/css">')
   })
 })

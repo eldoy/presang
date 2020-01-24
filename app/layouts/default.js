@@ -9,11 +9,11 @@ module.exports = async function($) {
       <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>${ $.page.title || 'Presang' }</title>
-        ${ $.css('/bundle.css') }
-        ${ $.js('/bundle.js') }
+        ${ $.style('/bundle.css') }
+        ${ $.script('/bundle.js') }
       </head>
       <body>
-        <div class="content">
+      <div class="content">
           <nav>
             <a href="/">home</a>
             <a href="/about.html">about</a>
