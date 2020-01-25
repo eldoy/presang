@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const request = require('request')
 const loader = require('../lib/loader.js')
+const sitemap = require('../lib/sitemap.js')
 const serve = require('../lib/serve.js')
 const cmd = process.argv[2] || 'help'
 const commands = { create, build, help, serve }
@@ -115,6 +116,15 @@ async function build() {
       const outpath = path.join(dist, `bundle.${type}`)
       fs.writeFileSync(outpath, bundle)
     })
+  }
+
+  // Build sitemap
+  const sitemapConfig = app.config.sitemap
+  if (sitemapConfig) {
+    console.log('Building sitemap.xml...')
+    const result = await sitemap(sitemapConfig)
+    const outpath = path.join(dist, 'sitemap.xml')
+    fs.writeFileSync(outpath, result)
   }
 
   // Copy assets
