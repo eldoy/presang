@@ -1,6 +1,8 @@
 # Presang
 Compact web application framework. Build static JamStack or isomorphic server side rendered (SSR) HTML applications in pure vanilla Javascript.
 
+This project is part of the [Waveorb Jamstack web app development framework.](https://waveorb.com) It has all of Presang's features and a lot more, we recommend using that instead.
+
 Includes a minimal server. Layouts and pages are loaded into memory on startup for that blazing speed. Web pack is not needed, there are no dependencies and package size is optionally zero (0) bytes.
 
 You can completely control what gets included on the server and what gets loaded after the page is served in the browser without any magic.

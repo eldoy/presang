@@ -2,15 +2,7 @@ lang: en
 pretty: true
 compile: true
 routemap:
-  /:
-    page: index
-    lang: en
-  /no/:
-    page: index
-    lang: no
-  /about.html:
-    page: about
-    lang: en
-  /no/om-oss.html:
-    page: about
-    lang: no
+  /: en#index
+  /no/: no#index
+  /about.html: en#about
+  /no/om-oss.html: no#about

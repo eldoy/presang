@@ -88,52 +88,43 @@ describe('link', () => {
     expect(result).toBe('/docs/about.html')
   })
 
-  it('should return the correct link for routemap string match', async () => {
-    const routemap = {
-      '/om-oss.html': 'about'
-    }
-    const link = i18n.link({ routemap })
-    const result = link('about')
-    expect(result).toBe('/om-oss.html')
-  })
-
-  it('should return the correct link for routemap object match', async () => {
-    const routemap = {
-      '/om-oss.html': { page: 'about' }
-    }
-    const link = i18n.link({ routemap })
-    const result = link('about')
-    expect(result).toBe('/om-oss.html')
-  })
-
   it('should return the correct link for routemap', async () => {
+    const routemap = {
+      '/om-oss.html': 'no#about'
+    }
+    const link = i18n.link({ routemap }, 'no')
+    const result = link('about')
+    expect(result).toBe('/om-oss.html')
+  })
+
+  it('should return the correct link for routemap with language', async () => {
     const routes = {}
     routes.routemap = {
-      '/about.html': { page: 'about', lang: 'en' },
-      '/om-oss.html': { page: 'about', lang: 'no' }
+      '/about.html': 'en#about',
+      '/om-oss.html': 'no#about'
     }
     const link = i18n.link(routes)
     let result = link('about')
     expect(result).toBe('/about.html')
 
-    result = link('about', { lang: 'en' })
+    result = link('en#about')
     expect(result).toBe('/about.html')
 
-    result = link('about', { lang: 'no' })
+    result = link('no#about')
     expect(result).toBe('/om-oss.html')
   })
 
   it('should return the correct link for routemap index', async () => {
     const routes = {}
     routes.routemap = {
-      '/': { page: 'index', lang: 'no' },
-      '/en/': { page: 'index', lang: 'en' }
+      '/': 'no#index',
+      '/en/': 'en#index'
     }
-    const link = i18n.link(routes)
+    const link = i18n.link(routes, 'no')
     let result = link('index')
     expect(result).toBe('/')
 
-    result = link('index', { lang: 'en' })
+    result = link('en#index')
     expect(result).toBe('/en/')
   })
 
