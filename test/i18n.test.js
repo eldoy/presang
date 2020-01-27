@@ -28,7 +28,7 @@ describe('t', () => {
   it('should support interpolation', async () => {
     const locales = {
       en: {
-        'interpolation': 'interpolation %s %d'
+        'interpolation': 'interpolation %s %s'
       }
     }
     const $t = i18n.t({ lang: 'en', locales })
