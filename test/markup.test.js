@@ -103,7 +103,7 @@ describe('markup', () => {
     req.pathname = '/om-oss.html'
     $.app.config = {
       routes: {
-        routemap: { '/om-oss.html': 'about' }
+        routemap: { '/om-oss.html': 'en#about' }
       }
     }
     const result = await markup($)
@@ -116,33 +116,7 @@ describe('markup', () => {
     req.pathname = '/hello/om-oss.html'
      $.app.config = {
       routes: {
-        routemap: { '/hello/om-oss.html': 'about' }
-      }
-    }
-    const result = await markup($)
-    expect(flat(result)).toBe(
-      '<!doctype html><html><head><title>About</title></head><body><div>About</div></body></html>'
-    )
-  })
-
-  it('should load pages via routemap option as string deeply alternate', async () => {
-    req.pathname = '/hello/om-oss.html'
-    $.app.config = {
-      routes: {
-        routemap: { '/hello/om-oss.html': 'docs/deep' }
-      }
-    }
-    const result = await markup($)
-    expect(flat(result)).toBe(
-      '<!doctype html><html><head><title>Deep</title></head><body><div>Deep</div></body></html>'
-    )
-  })
-
-  it('should load pages via routemap option as object', async () => {
-    req.pathname = '/om-oss.html'
-    $.app.config = {
-      routes: {
-        routemap: { '/om-oss.html': { page: 'about' } }
+        routemap: { '/hello/om-oss.html': 'en#about' }
       }
     }
     const result = await markup($)
@@ -267,7 +241,7 @@ describe('markup', () => {
       config: {
         routes: {
           routemap: {
-            '/something.html': { page: 'something' }
+            '/something.html': 'en#something'
           }
         }
       }
@@ -292,32 +266,7 @@ describe('markup', () => {
       config: {
         routes: {
           routemap: {
-            '/_year/_month/artikkel.html': '_year/_month/article'
-          }
-        }
-      }
-    }
-    req.pathname = '/2020/12/artikkel.html'
-    const result = await markup($)
-    expect(flat(result)).toBe(`<div>2020/12</div>`)
-  })
-
-  it('should collect query params from URL with routemap option as object', async () => {
-    const article = async function($) {
-      return `<div>${$.req.query.year}/${$.req.query.month}</div>`
-    }
-    $.app = {
-      pages: {
-        _year: {
-          _month: {
-            article
-          }
-        }
-      },
-      config: {
-        routes: {
-          routemap: {
-            '/_year/_month/artikkel.html': { page: '_year/_month/article' }
+            '/_year/_month/artikkel.html': 'en#_year/_month/article'
           }
         }
       }
