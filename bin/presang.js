@@ -95,7 +95,7 @@ async function build() {
       request.get({
         url: address,
         gzip: true,
-        headers: { 'x-waveorb': 'build' }
+        headers: { 'x-waveorb-build': 'true' }
       }).pipe(stream)
     } catch(e) {
       console.log(`Can't connect to ${address}`)
