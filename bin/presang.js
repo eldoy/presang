@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const path = require('path')
+const _ = require('lodash')
 const request = require('request')
 const loader = require('../lib/loader.js')
 const sitemap = require('../lib/sitemap.js')
@@ -13,7 +14,7 @@ const base = path.resolve(path.join(__dirname, '..'))
 
 const fn = commands[cmd]
 if (!fn) {
-  console.log(`Unknown command: '${cmd}'`)
+  console.log(`\nUnknown command: '${cmd}'`)
   process.exit(1)
 }
 fn()
@@ -104,7 +105,7 @@ async function build() {
 
   // Build assets
   const app = await loader()
-  const assets = app.config.assets
+  const assets = _.get(app, 'config.assets.bundle')
   if (assets) {
     Object.keys(assets).forEach(function(type) {
       console.log(`Building ${type} files...`)

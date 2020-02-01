@@ -1,5 +1,6 @@
-js:
-  - /js/haka-min.js
-  - /js/app.js
-css:
-  - /css/app.css
+bundle:
+  js:
+    - /js/haka-min.js
+    - /js/app.js
+  css:
+    - /css/app.css
