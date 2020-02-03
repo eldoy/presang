@@ -120,7 +120,7 @@ async function build() {
   }
 
   // Build sitemap
-  const sitemapConfig = app.config.sitemap
+  const sitemapConfig = _.get(app, 'config.sitemap')
   if (sitemapConfig) {
     console.log('Building sitemap.xml...')
     const result = await sitemap(sitemapConfig)
