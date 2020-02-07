@@ -4,10 +4,10 @@ const path = require('path')
 const _ = require('lodash')
 const request = require('request')
 const loader = require('../lib/loader.js')
-const sitemap = require('../lib/sitemap.js')
+const sitemapBuilder = require('../lib/sitemap.js')
 const serve = require('../lib/serve.js')
 const cmd = process.argv[2] || 'help'
-const commands = { create, build, help, serve }
+const commands = { create, build, sitemap, help, serve }
 const root = process.cwd()
 const dist = path.join(root, 'dist')
 const base = path.resolve(path.join(__dirname, '..'))
@@ -23,8 +23,9 @@ function help() {
   console.log([
     '\nPresang commands:\n',
     'create - create a minimal app',
-    'serve  - start the server',
-    'build  - build a static app',
+    'serve - start the server',
+    'build - build a static app',
+    'sitemap - create a sitemap',
     'help   - print this menu'
   ].join('\n'))
 }
@@ -45,6 +46,17 @@ function copyFolderSync(from, to) {
 
 function create() {
   copyFolderSync(path.join(base, 'app'), path.join(root, 'app'))
+}
+
+async function sitemap() {
+  const app = await loader()
+  const sitemapConfig = _.get(app, 'config.sitemap')
+  if (sitemapConfig) {
+    console.log('Building sitemap.xml...')
+    const result = await sitemapBuilder(sitemapConfig)
+    const outpath = path.join(root, 'app', 'assets', 'sitemap.xml')
+    fs.writeFileSync(outpath, result)
+  }
 }
 
 async function build() {
@@ -117,15 +129,6 @@ async function build() {
       const outpath = path.join(dist, `bundle.${type}`)
       fs.writeFileSync(outpath, bundle)
     })
-  }
-
-  // Build sitemap
-  const sitemapConfig = _.get(app, 'config.sitemap')
-  if (sitemapConfig) {
-    console.log('Building sitemap.xml...')
-    const result = await sitemap(sitemapConfig)
-    const outpath = path.join(dist, 'sitemap.xml')
-    fs.writeFileSync(outpath, result)
   }
 
   // Copy assets
