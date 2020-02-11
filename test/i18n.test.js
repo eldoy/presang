@@ -88,6 +88,24 @@ describe('link', () => {
     expect(result).toBe('/docs/about.html')
   })
 
+  it('should support url parameters', async () => {
+    const link = i18n.link()
+    const result = link('about?test=1')
+    expect(result).toBe('/about.html?test=1')
+  })
+
+  it('should support hash link', async () => {
+    const link = i18n.link()
+    const result = link('about#contact')
+    expect(result).toBe('/about.html#contact')
+  })
+
+  it('should support url parameters and hash', async () => {
+    const link = i18n.link()
+    const result = link('about?test=1#hello')
+    expect(result).toBe('/about.html?test=1#hello')
+  })
+
   it('should return the correct link for routemap', async () => {
     const routemap = {
       '/om-oss.html': 'no@about'
