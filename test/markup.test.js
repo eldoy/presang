@@ -103,7 +103,7 @@ describe('markup', () => {
     req.pathname = '/om-oss.html'
     $.app.config = {
       routes: {
-        routemap: { '/om-oss.html': 'en#about' }
+        routemap: { '/om-oss.html': 'en@about' }
       }
     }
     const result = await markup($)
@@ -116,7 +116,7 @@ describe('markup', () => {
     req.pathname = '/hello/om-oss.html'
      $.app.config = {
       routes: {
-        routemap: { '/hello/om-oss.html': 'en#about' }
+        routemap: { '/hello/om-oss.html': 'en@about' }
       }
     }
     const result = await markup($)
@@ -241,7 +241,7 @@ describe('markup', () => {
       config: {
         routes: {
           routemap: {
-            '/something.html': 'en#something'
+            '/something.html': 'en@something'
           }
         }
       }
@@ -266,7 +266,7 @@ describe('markup', () => {
       config: {
         routes: {
           routemap: {
-            '/_year/_month/artikkel.html': 'en#_year/_month/article'
+            '/_year/_month/artikkel.html': 'en@_year/_month/article'
           }
         }
       }

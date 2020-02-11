@@ -90,7 +90,7 @@ describe('link', () => {
 
   it('should return the correct link for routemap', async () => {
     const routemap = {
-      '/om-oss.html': 'no#about'
+      '/om-oss.html': 'no@about'
     }
     const link = i18n.link({ routemap }, 'no')
     const result = link('about')
@@ -100,31 +100,31 @@ describe('link', () => {
   it('should return the correct link for routemap with language', async () => {
     const routes = {}
     routes.routemap = {
-      '/about.html': 'en#about',
-      '/om-oss.html': 'no#about'
+      '/about.html': 'en@about',
+      '/om-oss.html': 'no@about'
     }
     const link = i18n.link(routes)
     let result = link('about')
     expect(result).toBe('/about.html')
 
-    result = link('en#about')
+    result = link('en@about')
     expect(result).toBe('/about.html')
 
-    result = link('no#about')
+    result = link('no@about')
     expect(result).toBe('/om-oss.html')
   })
 
   it('should return the correct link for routemap index', async () => {
     const routes = {}
     routes.routemap = {
-      '/': 'no#index',
-      '/en/': 'en#index'
+      '/': 'no@index',
+      '/en/': 'en@index'
     }
     const link = i18n.link(routes, 'no')
     let result = link('index')
     expect(result).toBe('/')
 
-    result = link('en#index')
+    result = link('en@index')
     expect(result).toBe('/en/')
   })
 
