@@ -40,6 +40,14 @@ const compile = async function($) {
   return `<div>${ hello }</div>`
 }
 
+const compileBacktick = async function($) {
+  $.page.title = 'Compile Backtick'
+  function hello(type) {
+    return $.t(`name.${ type }`)
+  }
+  return `<div>${ hello }</div>`
+}
+
 const app = {
   layouts: {
     default: layout
@@ -133,6 +141,18 @@ describe('markup', () => {
     const result = await markup($)
     expect(flat(result)).toBe(
       `<!doctype html><html><head><title>Compile</title></head><body><div>function hello() {return 'name';}</div></body></html>`
+    )
+  })
+
+  it('should compile templates with backtick', async () => {
+    req.pathname = '/compile.html'
+    $.app.config = {
+      routes: { compile: true }
+    }
+    $.app.pages.compile = compileBacktick
+    const result = await markup($)
+    expect(flat(result)).toBe(
+      '<!doctype html><html><head><title>Compile Backtick</title></head><body><div>function hello(type) {return `name.${type}`;}</div></body></html>'
     )
   })
 
