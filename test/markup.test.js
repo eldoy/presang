@@ -27,6 +27,11 @@ const about = async function($) {
   return `<div>About</div>`
 }
 
+const nolayout = async function($) {
+  $.page.layout = false
+  return `<div>NoLayout</div>`
+}
+
 const deep = async function($) {
   $.page.title = 'Deep'
   return `<div>Deep</div>`
@@ -56,6 +61,7 @@ const app = {
     index,
     about,
     compile,
+    nolayout,
     docs: {
       deep
     }
@@ -105,6 +111,12 @@ describe('markup', () => {
     expect(flat(result)).toBe(
       '<!doctype html><html><head><title>Deep</title></head><body><div>Deep</div></body></html>'
     )
+  })
+
+  it('should not have a layout', async () => {
+    req.pathname = '/nolayout.html'
+    const result = await markup($)
+    expect(flat(result)).toBe('<div>NoLayout</div>')
   })
 
   it('should load pages via routemap option as string', async () => {
