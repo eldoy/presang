@@ -4,7 +4,7 @@ module.exports = async function($) {
   return /* html */`
     <h1>home</h1>
     <p>
-      this is your shiny new blazing fast
+      this is your shiny new <strong>blazing</strong> fast
       <a href="https://github.com/eldoy/presang" target="_blank">presang app!</a>
     </p>
   `
