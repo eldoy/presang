@@ -46,6 +46,6 @@
     "pretty": "^2.0.0",
     "request": "^2.88.2",
     "sirloin": "^0.17.2",
-    "sitemap": "^6.2.0"
+    "sitemap": "^6.3.2"
   }
 }
