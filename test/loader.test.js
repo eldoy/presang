@@ -18,14 +18,4 @@ describe('loader', () => {
     expect(typeof app).toBe('object')
     expect(app.config.env.hello).toBe('bye')
   })
-
-  it('should build scss files', async () => {
-    let file = path.join(process.cwd(), 'app', 'assets', 'css', 'base.css')
-    try {
-      fs.unlinkSync(file)
-    } catch(e){}
-    await loader()
-    const css = fs.readFileSync(file)
-    expect(css.length).toEqual(47)
-  })
 })

@@ -4,4 +4,3 @@ bundle:
     - /js/app.js
   css:
     - /css/app.css
-    - /css/base.css

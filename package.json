@@ -43,7 +43,6 @@
     "conficurse": "0.2.1",
     "cuid": "^2.1.8",
     "lodash": "^4.17.20",
-    "node-sass": "^4.14.1",
     "pretty": "^2.0.0",
     "request": "^2.88.2",
     "sirloin": "^0.17.2",
