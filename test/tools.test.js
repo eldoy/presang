@@ -38,5 +38,13 @@ describe('tools', () => {
     params = { hello: 'Hello! 2' }
     tools.transform(params)
     expect(params.hello).toBe('Hello! 2')
+
+    params = { hello: '2020-11-02T08:22:31.017Z' }
+    tools.transform(params)
+    expect(typeof params.hello.getMonth).toBe('function')
+
+    params = { hello: '2020-11-02T08:22:31Z' }
+    tools.transform(params)
+    expect(typeof params.hello.getMonth).toBe('function')
   })
 })
