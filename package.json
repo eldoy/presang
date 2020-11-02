@@ -45,7 +45,7 @@
     "lodash": "^4.17.20",
     "pretty": "^2.0.0",
     "request": "^2.88.2",
-    "sirloin": "^0.17.3",
-    "sitemap": "^6.3.2"
+    "sirloin": "^0.18.1",
+    "sitemap": "^6.3.3"
   }
 }
