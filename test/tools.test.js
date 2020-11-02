@@ -29,4 +29,14 @@ describe('tools', () => {
     result = tools.format('hello %s', true)
     expect(result).toBe('hello true')
   })
+
+  it('should should transform a string', async () => {
+    let params = { hello: 'something' }
+    tools.transform(params)
+    expect(params.hello).toBe('something')
+
+    params = { hello: 'Hello! 2' }
+    tools.transform(params)
+    expect(params.hello).toBe('Hello! 2')
+  })
 })
