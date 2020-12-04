@@ -47,4 +47,9 @@ describe('tools', () => {
     tools.transform(params)
     expect(typeof params.hello.getMonth).toBe('function')
   })
+
+  it('should md5 hash a string', async () => {
+    let result = tools.md5('hello')
+    expect(result).toBe('5d41402abc4b2a76b9719d911017c592')
+  })
 })
