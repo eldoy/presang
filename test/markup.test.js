@@ -1,4 +1,3 @@
-const loader = require('conficurse')
 const markup = require('../lib/markup.js')
 
 const req = { pathname: '/', query: {} }
