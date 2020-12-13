@@ -52,4 +52,10 @@ describe('tools', () => {
     let result = tools.md5('hello')
     expect(result).toBe('5d41402abc4b2a76b9719d911017c592')
   })
+
+  it('should generate a uuid', async () => {
+    let result = tools.uuid()
+    expect(typeof result).toBe('string')
+    expect(result.length).toBe(36)
+  })
 })

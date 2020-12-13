@@ -7,7 +7,8 @@
     "presang": "./bin/presang.js"
   },
   "scripts": {
-    "test": "jest --watch",
+    "test": "PRESANG_PORT=5060 jest --watch",
+    "serve:test": "PRESANG_PORT=5060 nodemon ./bin/presang.js serve",
     "serve": "nodemon ./bin/presang.js serve",
     "build": "rm -rf ./dist && node ./bin/presang.js build",
     "help": "node ./bin/presang.js help"
@@ -36,7 +37,7 @@
     "jamstack"
   ],
   "devDependencies": {
-    "jest": "^26.6.1"
+    "jest": "^26.6.3"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -46,6 +47,7 @@
     "pretty": "^2.0.0",
     "request": "^2.88.2",
     "sirloin": "^0.18.1",
-    "sitemap": "^6.3.3"
+    "sitemap": "^6.3.3",
+    "uuid": "^8.3.2"
   }
 }
