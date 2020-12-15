@@ -167,6 +167,29 @@ describe('markup', () => {
     )
   })
 
+  it('should compile with escaped strings', async () => {
+    req.pathname = '/compile.html'
+    $.app.config = {
+      routes: { compile: true }
+    }
+    $.app.pages.compile = async function($) {
+      $.page.title = 'Compile Translation'
+      function hello() {
+        var hello = $.t('hello')
+        var bye = $.t('bye')
+      }
+      return `<div>${hello}</div>`
+    }
+    $.t = function (key) {
+      if (key === 'hello') return "You don't"
+      if (key === 'bye') return "Bye \"YEAH\" don't"
+    }
+    const result = await markup($)
+    expect(flat(result)).toBe(
+      "<!doctype html><html><head><title>Compile Translation</title></head><body><div>function hello() {var hello = \"You don't\";var bye = \"Bye \\\"YEAH\\\" don't\";}</div></body></html>"
+    )
+  })
+
   it('should work with dynamic routes', async () => {
     const _index = async function($) {
       return `<div>HTML</div>`
