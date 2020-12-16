@@ -37,6 +37,7 @@
     "jamstack"
   ],
   "devDependencies": {
+    "axios": "^0.21.0",
     "jest": "^26.6.3"
   },
   "dependencies": {
