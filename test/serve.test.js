@@ -14,7 +14,7 @@ describe('serve', () => {
       expect(result.data).toBe('')
       expect(result.status).toBe(200)
     } catch (e) {
-      console.log(`Serve tests needs server: node index.js`)
+      console.log(`Serve tests needs server: npm run serve:test`)
     }
   })
 })
