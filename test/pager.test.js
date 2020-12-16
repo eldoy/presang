@@ -7,7 +7,7 @@ describe('pager', () => {
   })
 
   it('should find a page without routemap', async () => {
-    process.env.WAVEORB_APP = 'test/apps/app3'
+    process.env.WAVEORB_APP = 'test/apps/app18'
     const app = await loader()
     const $ = { app }
 
@@ -28,7 +28,7 @@ describe('pager', () => {
   })
 
   it('should find a page with routemap', async () => {
-    process.env.WAVEORB_APP = 'test/apps/app2'
+    process.env.WAVEORB_APP = 'test/apps/app17'
     const app = await loader()
     const $ = { app }
 
