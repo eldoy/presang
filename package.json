@@ -7,8 +7,8 @@
     "presang": "./bin/presang.js"
   },
   "scripts": {
-    "test": "PRESANG_PORT=5060 jest --watch",
-    "serve:test": "PRESANG_PORT=5060 nodemon ./bin/presang.js serve",
+    "test": "WAVEORB_PORT=5060 jest --watch",
+    "serve:test": "WAVEORB_PORT=5060 nodemon ./bin/presang.js serve",
     "serve": "nodemon ./bin/presang.js serve",
     "build": "rm -rf ./dist && node ./bin/presang.js build",
     "help": "node ./bin/presang.js help"
