@@ -42,8 +42,9 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "conficurse": "0.2.1",
+    "conficurse": "0.2.2",
     "cuid": "^2.1.8",
+    "extras": "^0.1.2",
     "lodash": "^4.17.20",
     "pretty": "^2.0.0",
     "request": "^2.88.2",
