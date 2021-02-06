@@ -1,7 +1,6 @@
 const tools = require('extras')
 const actions = require('./lib/actions.js')
 const bundler = require('./lib/bundler.js')
-const dispatch = require('./lib/dispatch.js')
 const env = require('./lib/env.js')
 const i18n = require('./lib/i18n.js')
 const loader = require('./lib/loader.js')
@@ -13,4 +12,4 @@ const serve = require('./lib/serve.js')
 const sitemap = require('./lib/sitemap.js')
 const validate = require('./lib/validate.js')
 
-module.exports = { tools, actions, bundler, dispatch, env, i18n, loader, locales, markup, orb, pager, serve, sitemap, validate }
+module.exports = { tools, actions, bundler, env, i18n, loader, locales, markup, orb, pager, serve, sitemap, validate }

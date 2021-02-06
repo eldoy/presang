@@ -1,20 +1,34 @@
 const axios = require('axios')
-async function api(path, data) {
+const base = `http://localhost:${process.env.WAVEORB_PORT}`
+
+function api(path, data = {}, method = 'post') {
   try {
-    return await axios.post(`http://localhost:${process.env.WAVEORB_PORT}/`, { path, data })
+    return axios({ method, url: base + path, data })
   } catch (e) {
     return e.response
   }
 }
 
 describe('serve', () => {
+  beforeAll(async () => {
+    await new Promise(r => setTimeout(r, 300))
+  })
+
   it('should return success on empty app', async () => {
-    try {
-      const result = await api('createProject', {})
-      expect(result.data).toBe('')
-      expect(result.status).toBe(200)
-    } catch (e) {
-      console.log(`Serve tests needs server: npm run serve:test`)
-    }
+    const result = await api('/project/create')
+    expect(result.data).toBe('')
+    expect(result.status).toBe(200)
+  })
+
+  it('should serve HTML', async () => {
+    const result = await api('/about.html', {}, 'get')
+    expect(result.data).toContain('html>')
+    expect(result.status).toBe(200)
+  })
+
+  it('should serve actions', async () => {
+    const result = await api('/project/find')
+    expect(result.data).toEqual({ hello: 'project/find' })
+    expect(result.status).toBe(200)
   })
 })
