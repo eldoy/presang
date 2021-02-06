@@ -85,4 +85,46 @@ describe('actions', () => {
     let result = await actions($)
     expect(result.hello).toBe('hello')
   })
+
+  it('should match actions from pathname for index', async () => {
+    const app = await loader({ path: 'test/apps/app19', locales })
+    const $ = {
+      app,
+      req: {
+        pathname: '/'
+      },
+      params: {},
+      t: i18n.t({ locales })
+    }
+    let result = await actions($)
+    expect(result.hello).toBe('index')
+  })
+
+  it('should match actions from pathname for about', async () => {
+    const app = await loader({ path: 'test/apps/app19', locales })
+    const $ = {
+      app,
+      req: {
+        pathname: '/about'
+      },
+      params: {},
+      t: i18n.t({ locales })
+    }
+    let result = await actions($)
+    expect(result.hello).toBe('about')
+  })
+
+  it('should match actions from pathname for project/create', async () => {
+    const app = await loader({ path: 'test/apps/app19', locales })
+    const $ = {
+      app,
+      req: {
+        pathname: '/project/create'
+      },
+      params: {},
+      t: i18n.t({ locales })
+    }
+    let result = await actions($)
+    expect(result.hello).toBe('project/create')
+  })
 })
