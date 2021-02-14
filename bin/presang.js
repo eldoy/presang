@@ -2,12 +2,13 @@
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
+const extras = require('extras')
 const request = require('request')
 const loader = require('../lib/loader.js')
 const sitemapBuilder = require('../lib/sitemap.js')
 const serve = require('../lib/serve.js')
 const cmd = process.argv[2] || 'help'
-const commands = { create, build, sitemap, help, serve }
+const commands = { build, sitemap, help, serve }
 const root = process.cwd()
 const dist = path.join(root, 'dist')
 const base = path.resolve(path.join(__dirname, '..'))
@@ -21,31 +22,12 @@ fn()
 
 function help() {
   console.log([
-    '\nPresang commands:\n',
-    'create - create a minimal app',
-    'serve - start the server',
-    'build - build a static app',
-    'sitemap - create a sitemap',
-    'help   - print this menu'
+    '\nAvailable commands:\n',
+    'serve   - start server',
+    'build   - build app',
+    'sitemap - create sitemap',
+    'help    - print help'
   ].join('\n'))
-}
-
-function mkdir(to) {
-  try {
-    fs.mkdirSync(to, { recursive: true })
-  } catch (e) {}
-}
-
-function copyFolderSync(from, to) {
-  mkdir(to)
-  fs.readdirSync(from).forEach(function(item) {
-    const [f, t] = [path.join(from, item), path.join(to, item)]
-    fs.lstatSync(f).isFile() ? fs.copyFileSync(f, t) : copyFolderSync(f, t)
-  })
-}
-
-function create() {
-  copyFolderSync(path.join(base, 'app'), path.join(root, 'app'))
 }
 
 async function sitemap() {
@@ -55,13 +37,13 @@ async function sitemap() {
     console.log('Building sitemap.xml...')
     const result = await sitemapBuilder(sitemapConfig)
     const outpath = path.join(root, 'app', 'assets', 'sitemap.xml')
-    fs.writeFileSync(outpath, result)
+    extras.write(outpath, result)
   }
 }
 
 async function build() {
   function read(name) {
-    return fs.readdirSync(path.join(root, name))
+    return extras.dir(path.join(root, name))
   }
 
   function find(name) {
@@ -73,17 +55,7 @@ async function build() {
     return result
   }
 
-  function tree(dir) {
-    return fs.readdirSync(dir).reduce(function(files, file) {
-      const name = path.join(dir, file)
-      const list = fs.statSync(name).isDirectory() ? tree(name) : name
-      return files.concat(list)
-    }, [])
-  }
-
-  if (!fs.existsSync(dist)) {
-    fs.mkdirSync(dist)
-  }
+  if (!extras.exist(dist)) extras.mkdir(dist)
 
   const buildFile = process.argv[3] || 'build.js'
   let builder
@@ -101,7 +73,7 @@ async function build() {
     }
     const dir = path.dirname(name)
     const file = path.basename(name)
-    mkdir(path.join(dist, dir))
+    extras.mkdir(path.join(dist, dir))
     const stream = fs.createWriteStream(path.join(dist, dir, file))
     const address = `${builder.host}${url}`
     try {
@@ -124,15 +96,15 @@ async function build() {
       const files = assets[type] || []
       const bundle = files.map(function(file) {
         const inpath = path.join(root, 'app', 'assets', file)
-        return fs.readFileSync(inpath, 'utf-8')
+        return extras.read(inpath, 'utf8')
       }).join(type === 'js' ? ';' : '\n')
       const outpath = path.join(dist, `bundle.${type}`)
-      fs.writeFileSync(outpath, bundle)
+      extras.write(outpath, bundle)
     })
   }
 
   // Copy assets
-  copyFolderSync('app/assets', 'dist')
+  extras.copy(path.join('app', 'assets', '*'), 'dist')
 
   console.log(`Files written to '${dist}'`)
 }
