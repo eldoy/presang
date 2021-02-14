@@ -38,6 +38,10 @@ async function sitemap() {
     const result = await sitemapBuilder(sitemapConfig)
     const outpath = path.join(root, 'app', 'assets', 'sitemap.xml')
     extras.write(outpath, result)
+  } else {
+    console.log('\nNo sitemap config found.\n')
+    console.log('Read about it here:')
+    console.log('https://waveorb.com/doc/seo-and-marketing.html#sitemap')
   }
 }
 
